@@ -1,6 +1,6 @@
 #include "mouseImageNode.h"
 
-CalculatorNode::CalculatorNode(){}
+MouseImageNode::MouseImageNode(){}
 
 //Bind all your methods used in this class
 void MouseImageNode::_bind_methods(){
