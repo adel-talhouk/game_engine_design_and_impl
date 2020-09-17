@@ -8,6 +8,10 @@ class MouseImageNode : public Node2D
 {
 	GDCLASS(MouseImageNode, Node2D);
 
+    //Stats
+    Point2 mMousePos;
+    Sprite mSprite;
+
 protected:
     static void _bind_methods();
 
@@ -15,13 +19,12 @@ public:
     MouseImageNode();
 
     //Methods
-    void updateMousePosition();
     void setImage(Sprite theSprite);
-
-    //Overrides?
+    void updateMousePosition();
     void _draw();
-    void update();
 
+    //Overloads
+    void _process(float delta);
 };
 
 #endif
