@@ -25,7 +25,7 @@ public:
     int getTestInt();
 
     //Methods
-    void setImage(Sprite theSprite);
+    void setTexture(Texture theTexture);
     void updateMousePosition();
     void _draw();
 

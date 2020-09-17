@@ -4,7 +4,7 @@ MouseImageNode::MouseImageNode(){}
 
 //Bind all your methods used in this class
 void MouseImageNode::_bind_methods(){
-    //ClassDB::bind_method(D_METHOD("setImage", "theSprite"), &MouseImageNode::setImage);
+    ClassDB::bind_method(D_METHOD("setTexture", "theTexture"), &MouseImageNode::setTexture);
     ClassDB::bind_method(D_METHOD("updateMousePosition"), &MouseImageNode::updateMousePosition);
     ClassDB::bind_method(D_METHOD("_draw"), &MouseImageNode::_draw);
     ClassDB::bind_method(D_METHOD("_process", "delta"), &MouseImageNode::_process);
@@ -17,7 +17,7 @@ int MouseImageNode::getTestInt()
 }
 
 //Set the image
-void MouseImageNode::setImage(Sprite theSprite)
+void MouseImageNode::setTexture(Texture theTexture)
 {
 
 }
@@ -42,7 +42,7 @@ void MouseImageNode::_draw()
 void MouseImageNode::_process(float delta)
 {
     //For testing purposes
-    mTestInt++;
+    mTestInt+=1;
 
     //Update the mouse position
 
