@@ -18,6 +18,10 @@ public:
     void updateMousePosition();
     void setImage(Sprite theSprite);
 
+    //Overrides?
+    void _draw();
+    void update();
+
 };
 
 #endif
