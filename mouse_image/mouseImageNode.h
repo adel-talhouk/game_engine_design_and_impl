@@ -11,7 +11,7 @@ class MouseImageNode : public Node2D
 	GDCLASS(MouseImageNode, Node2D);
 
     //Stats
-    Point2 mMousePos;
+    Point2 mMousePos = Point2(300, 300);
     Sprite mSprite;
 
     //For testing purposes
@@ -27,11 +27,11 @@ public:
     int getTestInt();
 
     //Methods
-    //void setTexture(Ref<Texture>theTexture);
+    //void setTexture(const Ref<Texture> &theTexture);
     void updateMousePosition();
-    void _draw();
 
     //Overloads
+    void _draw();
     void _process(float delta);
     void _notification(int p_notification);
 };

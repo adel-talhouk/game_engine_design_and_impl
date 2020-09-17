@@ -1,5 +1,6 @@
 #include "mouseImageNode.h"
 #include "scene/resources/texture.h"
+//#include "core/os/input.h"
 
 MouseImageNode::MouseImageNode(){}
 
@@ -19,14 +20,17 @@ int MouseImageNode::getTestInt()
 }
 
 //Set the image
-//void MouseImageNode::setTexture(Texture theTexture)
+//void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
 //{
-//
+//    mSprite.set_texture(theTexture);
 //}
 
 //Update the mouse position
 void MouseImageNode::updateMousePosition()
 {
+    //For testing purposes
+    mTestInt = 5;
+
     //Find the mouse position
 
 
@@ -37,7 +41,7 @@ void MouseImageNode::updateMousePosition()
 //Draw the sprite
 void MouseImageNode::_draw()
 {
-
+    mSprite.get_texture()->draw(mSprite.get_texture()->get_rid(), mMousePos);
 }
 
 //Overloaded _process function
@@ -62,7 +66,22 @@ void MouseImageNode::_notification(int p_notification)
         //For testing purposes
         mTestInt++;
 
+        //Draw
+        _draw();
+
         break;
     }
+    //case NOTIFICATION_INPUT:
+    //case NOTIFICATION_TRANSLATION_CHANGED:
+    //case NOTIFICATION_WM_MOUSE_ENTER:
+    //{
+    //    //If the mouse moved
+    //    if (Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED)
+    //    {
+    //        //Update mouse position
+    //        updateMousePosition();
+    //    }
+    //    break;
+    //}
     }
 }
