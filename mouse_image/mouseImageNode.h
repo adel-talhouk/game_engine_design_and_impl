@@ -3,6 +3,7 @@
 #define MOUSEIMAGENODE_H
 
 #include "scene/2d/sprite.h"
+#include "core/reference.h"
 
 class Texture;
 
@@ -17,6 +18,8 @@ class MouseImageNode : public Node2D
     //For testing purposes
     int mTestInt = 0;
 
+    void _draw();
+
 protected:
     static void _bind_methods();
 
@@ -27,11 +30,11 @@ public:
     int getTestInt();
 
     //Methods
-    //void setTexture(const Ref<Texture> &theTexture);
-    void updateMousePosition();
+    void setTexture(const Ref<Texture> &theTexture);
+    void updateMousePosition(Point2 pos);
 
     //Overloads
-    void _draw();
+    //void _draw();
     void _process(float delta);
     void _notification(int p_notification);
 };
