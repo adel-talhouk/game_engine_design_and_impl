@@ -2,19 +2,21 @@
 #ifndef MOUSEIMAGENODE_H
 #define MOUSEIMAGENODE_H
 
-#include "scene/main/node.h"
+#include "scene/2d/sprite.h"
 
-class MouseImageNode : public Node {
-	GDCLASS(MouseImageNode, Node);
+class MouseImageNode : public Node2D 
+{
+	GDCLASS(MouseImageNode, Node2D);
 
 protected:
-  static void _bind_methods();
+    static void _bind_methods();
 
 public:
-  MouseImageNode();
+    MouseImageNode();
 
-  //Methods
-
+    //Methods
+    void updateMousePosition();
+    void setImage(Sprite theSprite);
 
 };
 
