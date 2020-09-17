@@ -1,6 +1,5 @@
 #include "mouseImageNode.h"
 #include "scene/resources/texture.h"
-//#include "core/os/input.h"
 
 MouseImageNode::MouseImageNode(){}
 
@@ -9,14 +8,9 @@ void MouseImageNode::_bind_methods(){
     ClassDB::bind_method(D_METHOD("setTexture", "theTexture"), &MouseImageNode::setTexture);
     ClassDB::bind_method(D_METHOD("updateMousePosition", "pos"), &MouseImageNode::updateMousePosition);
     //ClassDB::bind_method(D_METHOD("_draw"), &MouseImageNode::_draw);
-    ClassDB::bind_method(D_METHOD("_process", "delta"), &MouseImageNode::_process);
-    ClassDB::bind_method(D_METHOD("getTestInt"), &MouseImageNode::getTestInt);
+    //ClassDB::bind_method(D_METHOD("_process", "delta"), &MouseImageNode::_process);
+    ClassDB::bind_method(D_METHOD("getMousePos"), &MouseImageNode::getMousePos);
     ClassDB::bind_method(D_METHOD("_notification", "p_notification"), &MouseImageNode::_notification);
-}
-
-int MouseImageNode::getTestInt()
-{
-    return mTestInt;
 }
 
 //Set the image
@@ -28,7 +22,7 @@ void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
 //Update the mouse position
 void MouseImageNode::updateMousePosition(Point2 pos)
 {
-    //Find the mouse position
+    //Update the mouse position
     mMousePos = pos;
 }
 
@@ -39,17 +33,14 @@ void MouseImageNode::_draw()
 }
 
 //Overloaded _process function
-void MouseImageNode::_process(float delta)
-{
-    //For testing purposes
-    //mTestInt+=1;
-
-    //Update the mouse position
-
-
-    //Draw the sprite
-
-}
+//void MouseImageNode::_process(float delta)
+//{
+//    //Update the mouse position
+//
+//
+//    //Draw the sprite
+//
+//}
 
 void MouseImageNode::_notification(int p_notification)
 {
@@ -62,17 +53,5 @@ void MouseImageNode::_notification(int p_notification)
 
         break;
     }
-    //case NOTIFICATION_INPUT:
-    //case NOTIFICATION_TRANSLATION_CHANGED:
-    //case NOTIFICATION_WM_MOUSE_ENTER:
-    //{
-    //    //If the mouse moved
-    //    if (Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CAPTURED)
-    //    {
-    //        //Update mouse position
-    //        updateMousePosition();
-    //    }
-    //    break;
-    //}
     }
 }

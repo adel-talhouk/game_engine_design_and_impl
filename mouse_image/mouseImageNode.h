@@ -15,11 +15,6 @@ class MouseImageNode : public Node2D
     Point2 mMousePos = Point2(300, 300);
     Sprite mSprite;
 
-    //For testing purposes
-    int mTestInt = 0;
-
-    void _draw();
-
 protected:
     static void _bind_methods();
 
@@ -27,15 +22,15 @@ public:
     MouseImageNode();
 
     //For testing purposes
-    int getTestInt();
+    Point2 getMousePos() { return mMousePos; };
 
     //Methods
     void setTexture(const Ref<Texture> &theTexture);
     void updateMousePosition(Point2 pos);
 
     //Overloads
-    //void _draw();
-    void _process(float delta);
+    void _draw();
+    //void _process(float delta);
     void _notification(int p_notification);
 };
 
