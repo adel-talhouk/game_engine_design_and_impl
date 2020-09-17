@@ -12,11 +12,17 @@ class MouseImageNode : public Node2D
     Point2 mMousePos;
     Sprite mSprite;
 
+    //For testing purposes
+    int mTestInt = 0;
+
 protected:
     static void _bind_methods();
 
 public:
     MouseImageNode();
+
+    //For testing purposes
+    int getTestInt();
 
     //Methods
     void setImage(Sprite theSprite);

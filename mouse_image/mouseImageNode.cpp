@@ -8,6 +8,12 @@ void MouseImageNode::_bind_methods(){
     ClassDB::bind_method(D_METHOD("updateMousePosition"), &MouseImageNode::updateMousePosition);
     ClassDB::bind_method(D_METHOD("_draw"), &MouseImageNode::_draw);
     ClassDB::bind_method(D_METHOD("_process", "delta"), &MouseImageNode::_process);
+    ClassDB::bind_method(D_METHOD("getTestInt"), &MouseImageNode::getTestInt);
+}
+
+int MouseImageNode::getTestInt()
+{
+    return mTestInt;
 }
 
 //Set the image
@@ -36,7 +42,7 @@ void MouseImageNode::_draw()
 void MouseImageNode::_process(float delta)
 {
     //For testing purposes
-    //std::cout << "Test\n";
+    mTestInt++;
 
     //Update the mouse position
 
