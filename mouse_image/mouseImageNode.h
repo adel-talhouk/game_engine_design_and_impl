@@ -4,6 +4,8 @@
 
 #include "scene/2d/sprite.h"
 
+class Texture;
+
 class MouseImageNode : public Node2D 
 {
 	GDCLASS(MouseImageNode, Node2D);
@@ -25,12 +27,13 @@ public:
     int getTestInt();
 
     //Methods
-    void setTexture(Texture theTexture);
+    //void setTexture(Ref<Texture>theTexture);
     void updateMousePosition();
     void _draw();
 
     //Overloads
     void _process(float delta);
+    void _notification(int p_notification);
 };
 
 #endif
