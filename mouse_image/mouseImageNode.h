@@ -15,6 +15,8 @@ class MouseImageNode : public Node2D
     Point2 mMousePos = Point2(300, 300);
     Sprite mSprite;
 
+    void drawMouseImage();
+
 protected:
     static void _bind_methods();
 
@@ -29,7 +31,7 @@ public:
     void updateMousePosition(Point2 pos);
 
     //Overloads
-    void _draw();
+    //void drawMouseImage();
     //void _process(float delta);
     void _notification(int p_notification);
 };
