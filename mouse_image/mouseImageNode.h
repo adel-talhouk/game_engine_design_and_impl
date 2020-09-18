@@ -2,20 +2,21 @@
 #ifndef MOUSEIMAGENODE_H
 #define MOUSEIMAGENODE_H
 
-#include "scene/2d/sprite.h"
 #include "core/reference.h"
+#include "scene/2d/sprite.h"
 
 class Texture;
 
-class MouseImageNode : public Node2D 
+class MouseImageNode : public Sprite 
 {
 	GDCLASS(MouseImageNode, Node2D);
 
     //Stats
-    Point2 mMousePos;// = Point2(300, 300);
+    Point2 mMousePos;
     Ref<Texture> mTexture;
 
-    void drawMouseImage();
+    //void drawMouseImage();
+    void updateMousePosition();
 
 protected:
     static void _bind_methods();
@@ -27,8 +28,6 @@ public:
 
     //Methods
     void setTexture(const Ref<Texture> &theTexture);
-    //void drawMouseImage();
-    void _process();
     void _notification(int p_notification);
 };
 
