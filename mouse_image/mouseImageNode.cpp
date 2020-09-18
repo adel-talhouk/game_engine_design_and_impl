@@ -6,7 +6,7 @@ MouseImageNode::MouseImageNode(){}
 //Bind all your methods used in this class
 void MouseImageNode::_bind_methods(){
     ClassDB::bind_method(D_METHOD("setTexture", "theTexture"), &MouseImageNode::setTexture);
-    ClassDB::bind_method(D_METHOD("updateMousePosition", "pos"), &MouseImageNode::updateMousePosition);
+    //ClassDB::bind_method(D_METHOD("updateMousePosition", "pos"), &MouseImageNode::updateMousePosition);
     //ClassDB::bind_method(D_METHOD("drawMouseImage"), &MouseImageNode::drawMouseImage);
     //ClassDB::bind_method(D_METHOD("_process", "delta"), &MouseImageNode::_process);
     ClassDB::bind_method(D_METHOD("getMousePos"), &MouseImageNode::getMousePos);
@@ -20,11 +20,11 @@ void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
 }
 
 //Update the mouse position
-void MouseImageNode::updateMousePosition(Point2 pos)
-{
-    //Update the mouse position
-    mMousePos = pos;
-}
+//void MouseImageNode::updateMousePosition(Point2 pos)
+//{
+//    //Update the mouse position
+//    mMousePos = pos;
+//}
 
 //Draw the sprite
 void MouseImageNode::drawMouseImage()
@@ -34,14 +34,14 @@ void MouseImageNode::drawMouseImage()
 }
 
 //Overloaded _process function
-//void MouseImageNode::_process(float delta)
-//{
-//    //Update the mouse position
-//
-//
-//    //Draw the sprite
-//
-//}
+void MouseImageNode::_process(/*float delta*/)
+{
+    //Update the mouse position
+    mMousePos = get_global_mouse_position();
+
+    //Draw the sprite
+
+}
 
 void MouseImageNode::_notification(int p_notification)
 {
@@ -49,8 +49,8 @@ void MouseImageNode::_notification(int p_notification)
     {
     case NOTIFICATION_PROCESS:
     {
-        //Draw
-        //drawMouseImage();
+        //Process
+        _process();
 
         break;
     }

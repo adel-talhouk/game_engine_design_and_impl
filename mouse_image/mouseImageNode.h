@@ -23,16 +23,15 @@ protected:
 public:
     MouseImageNode();
 
-    //For testing purposes
     Point2 getMousePos() { return mMousePos; };
 
     //Methods
     void setTexture(const Ref<Texture> &theTexture);
-    void updateMousePosition(Point2 pos);
+    //void updateMousePosition(Point2 pos);
 
     //Overloads
     //void drawMouseImage();
-    //void _process(float delta);
+    void _process(/*float delta*/);
     void _notification(int p_notification);
 };
 
