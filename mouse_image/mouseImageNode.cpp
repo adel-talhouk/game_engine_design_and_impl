@@ -29,7 +29,7 @@ void MouseImageNode::updateMousePosition(Point2 pos)
 //Draw the sprite
 void MouseImageNode::drawMouseImage()
 {
-    mSprite.get_texture()->draw(mSprite.get_texture()->get_rid(), mMousePos);
+    //mSprite.get_texture()->draw(mSprite.get_texture()->get_rid(), mMousePos);
     //mSprite.get_texture()->draw(mSprite.get_canvas_item(), mMousePos);
 }
 
@@ -51,6 +51,13 @@ void MouseImageNode::_notification(int p_notification)
     {
         //Draw
         //drawMouseImage();
+
+        break;
+    }
+    case NOTIFICATION_DRAW:
+    {
+        //Draw
+        drawMouseImage();
 
         break;
     }
