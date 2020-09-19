@@ -13,16 +13,6 @@ void MouseImageNode::_bind_methods(){
 //Set the image
 void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
 {
-    //mTexture = theTexture;
-
-    //if (mTexture.is_valid())
-    //    mTexture->disconnect(CoreStringNames::get_singleton()->changed, this, "_texture_changed");
-
-    //mTexture = theTexture;
-
-    //if (mTexture.is_valid())
-    //    mTexture->connect(CoreStringNames::get_singleton()->changed, this, "_texture_changed");
-
     //In Sprite
     set_texture(theTexture);
     set_normal_map(theTexture);
@@ -32,13 +22,6 @@ void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
     mTextureRect = Rect2(mMousePos, mTextureSize);
     set_region_rect(mTextureRect);
 }
-
-//Draw the sprite
-//void MouseImageNode::drawMouseImage()
-//{
-//    //mSprite.get_texture()->draw(mSprite.get_texture()->get_rid(), mMousePos);
-//    //mTexture->draw(get_canvas_item(), mMousePos);
-//}
 
 //Overloaded _process function
 void MouseImageNode::updateMousePosition()

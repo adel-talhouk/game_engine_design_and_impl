@@ -17,7 +17,6 @@ class MouseImageNode : public Sprite
     Rect2 mTextureRect;
     //Ref<Texture> mTexture;
 
-    //void drawMouseImage();
     void updateMousePosition();
 
 protected:
