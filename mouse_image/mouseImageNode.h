@@ -5,7 +5,7 @@
 #include "core/reference.h"
 #include "scene/2d/sprite.h"
 
-class Texture;
+//class Texture;
 
 class MouseImageNode : public Sprite 
 {
@@ -13,7 +13,9 @@ class MouseImageNode : public Sprite
 
     //Stats
     Point2 mMousePos;
-    Ref<Texture> mTexture;
+    Size2 mTextureSize;
+    Rect2 mTextureRect;
+    //Ref<Texture> mTexture;
 
     //void drawMouseImage();
     void updateMousePosition();

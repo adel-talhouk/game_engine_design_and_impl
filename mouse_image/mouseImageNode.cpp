@@ -13,15 +13,24 @@ void MouseImageNode::_bind_methods(){
 //Set the image
 void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
 {
-    mTexture = theTexture;
+    //mTexture = theTexture;
 
-    if (mTexture.is_valid())
-        mTexture->disconnect(CoreStringNames::get_singleton()->changed, this, "_texture_changed");
+    //if (mTexture.is_valid())
+    //    mTexture->disconnect(CoreStringNames::get_singleton()->changed, this, "_texture_changed");
 
-    mTexture = theTexture;
+    //mTexture = theTexture;
 
-    if (mTexture.is_valid())
-        mTexture->connect(CoreStringNames::get_singleton()->changed, this, "_texture_changed");
+    //if (mTexture.is_valid())
+    //    mTexture->connect(CoreStringNames::get_singleton()->changed, this, "_texture_changed");
+
+    //In Sprite
+    set_texture(theTexture);
+    set_normal_map(theTexture);
+
+    //Set the size
+    mTextureSize = Size2(theTexture->get_size());
+    mTextureRect = Rect2(mMousePos, mTextureSize);
+    set_region_rect(mTextureRect);
 }
 
 //Draw the sprite
@@ -35,19 +44,22 @@ void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
 void MouseImageNode::updateMousePosition()
 {
     mMousePos = get_global_mouse_position();
+
+    //In sprite
+    set_offset(mMousePos);
 }
 
 void MouseImageNode::_notification(int p_notification)
 {
     switch (p_notification)
     {
-    //Notification for the _process method
+        //Notification for the _process method
     case NOTIFICATION_PROCESS:
     {
         //Update mouse pos
         updateMousePosition();
-
-        break;
     }
+    break;
+
     }
 }
