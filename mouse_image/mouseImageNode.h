@@ -13,8 +13,8 @@ class MouseImageNode : public Sprite
 
     //Stats
     Point2 mMousePos;
-    Size2 mTextureSize;
-    Rect2 mTextureRect;
+    //Size2 mTextureSize;
+    //Rect2 mTextureRect;
     //Ref<Texture> mTexture;
 
     void updateMousePosition();
