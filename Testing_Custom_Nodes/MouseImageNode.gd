@@ -14,6 +14,3 @@ func _ready():
 func _process(_delta):
 #	print("x ", getMousePos().x, " y ", getMousePos().y)
 	pass
-
-func _draw():
-	pass

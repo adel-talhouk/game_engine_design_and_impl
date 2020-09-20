@@ -14,17 +14,17 @@ void MouseImageNode::_bind_methods(){
 void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
 {
     //In Sprite
-    /*mSprite.*/set_texture(theTexture);
+    set_texture(theTexture);
     update();
 }
 
 void MouseImageNode::updateMousePosition()
 {
-    mMousePos = get_global_mouse_position();
+    //mMousePos = get_global_mouse_position();
+    mMousePos = get_local_mouse_position();
 
     //In sprite
     set_offset(mMousePos);
-    Sprite::_notification(NOTIFICATION_DRAW);
 }
 
 void MouseImageNode::_notification(int p_notification)
