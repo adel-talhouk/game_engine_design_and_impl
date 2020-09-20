@@ -11,18 +11,19 @@ class MouseImageNode : public Sprite
 {
 	GDCLASS(MouseImageNode, Node2D);
 
-    //Stats
+    //Mouse position
     Point2 mMousePos;
 
+    //Method(s)
     void updateMousePosition();
 
 protected:
     static void _bind_methods();
 
 public:
-    MouseImageNode();
 
-    Point2 getMousePos() { return mMousePos; };
+    //Constructor(s)
+    MouseImageNode();
 
     //Methods
     void setTexture(const Ref<Texture> &theTexture);

@@ -4,9 +4,9 @@
 MouseImageNode::MouseImageNode(){}
 
 //Bind all your methods used in this class
-void MouseImageNode::_bind_methods(){
+void MouseImageNode::_bind_methods()
+{
     ClassDB::bind_method(D_METHOD("setTexture", "theTexture"), &MouseImageNode::setTexture);
-    ClassDB::bind_method(D_METHOD("getMousePos"), &MouseImageNode::getMousePos);
     ADD_SIGNAL(MethodInfo("texture_changed"));
 }
 
@@ -33,7 +33,7 @@ void MouseImageNode::_notification(int p_notification)
     {
     case NOTIFICATION_PROCESS:
     {
-        //Update mouse pos
+        //Update mouse position
         updateMousePosition();
     }
     break;
