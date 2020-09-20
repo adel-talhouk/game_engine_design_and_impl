@@ -2,7 +2,7 @@ extends MouseImageNode
 
 
 # Declare member variables here. Examples:
-var theTexture = load("res://crosshair.jpg")
+var theTexture = load("res://zoom.png")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,4 +13,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 #	print("x ", getMousePos().x, " y ", getMousePos().y)
+	pass
+
+func _draw():
 	pass

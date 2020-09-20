@@ -14,14 +14,8 @@ void MouseImageNode::_bind_methods(){
 void MouseImageNode::setTexture(const Ref<Texture> &theTexture)
 {
     //In Sprite
-    /*mSprite.*/set_texture(theTexture);    //Not working: "ERROR: Can't emit non-existing signal "texture_changed" at core\object.cpp:1195"
+    /*mSprite.*/set_texture(theTexture);
     update();
-                                            //set_normal_map(theTexture);
-
-    ////Set the size
-    //mTextureSize = Size2(theTexture->get_size());
-    //mTextureRect = Rect2(mMousePos, mTextureSize);
-    //set_region_rect(mTextureRect);
 }
 
 void MouseImageNode::updateMousePosition()
@@ -29,7 +23,8 @@ void MouseImageNode::updateMousePosition()
     mMousePos = get_global_mouse_position();
 
     //In sprite
-    /*mSprite.*///set_offset(mMousePos);
+    set_offset(mMousePos);
+    Sprite::_notification(NOTIFICATION_DRAW);
 }
 
 void MouseImageNode::_notification(int p_notification)
