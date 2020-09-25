@@ -1,33 +1,21 @@
 //insert the Headername here
-#ifndef MOUSEIMAGENODE_H
-#define MOUSEIMAGENODE_H
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
 #include "core/reference.h"
-#include "scene/2d/sprite.h"
+#include "Entity.h"
 
-//class Texture;
-
-class MouseImageNode : public Sprite 
+class Component : public whatHere?
 {
-	GDCLASS(MouseImageNode, Node2D);
+	GDCLASS(Component, whatHere?);
 
-    //Mouse position
-    Point2 mMousePos;
+	//Member data
 
-    //Method(s)
-    void updateMousePosition();
-
-protected:
-    static void _bind_methods();
 
 public:
 
-    //Constructor(s)
-    MouseImageNode();
+	//Constructor(s) and Destructor????
 
-    //Methods
-    void setTexture(const Ref<Texture> &theTexture);
-    void _notification(int p_notification);
 };
 
 #endif

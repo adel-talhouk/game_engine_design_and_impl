@@ -1,5 +1,5 @@
-void register_mouse_image_types();
-void unregister_mouse_image_types();
+void register_ecs_arch_types();
+void unregister_ecs_arch_types();
 
 /*
 	void register_MODULNAME_types();
