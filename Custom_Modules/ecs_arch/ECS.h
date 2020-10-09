@@ -76,12 +76,13 @@ public:
 	void updateSystem();
 };
 
-//----------------------------------------------------------------------- GoDot classes
+//----------------------------------------------------------------------- GoDot class
 
 //Entity Node in GoDot
 class EcsNode : public Node2D
 {
 	GDCLASS(EcsNode, Node2D);
+	bool mbIsDeleted = false;	//Safety check
 
 protected:
 	static void _bind_methods();
@@ -93,6 +94,9 @@ protected:
 	std::map<int, MovementComponent> mMovementComponents;
 	std::map<int, HealthComponent> mHealthComponents;
 	std::map<int, ProjectileComponent> mProjectileComponents;
+
+	//Systems
+	std::vector<System*> mSystemsVector;
 
 public:
 	EcsNode();
