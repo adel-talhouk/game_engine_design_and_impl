@@ -19,60 +19,88 @@ struct Entity
 
 //----------------------------------------------------------------------- Components
 
-//Sprite component
+//Sprite
 struct SpriteComponent
 {
-	Sprite* sprite = NULL;
-	Color colour = Color(0, 0, 0, 1);
+	//Constructor(s) and Destructor
+	SpriteComponent(Sprite* sprite, Color colour = Color(0, 0, 0, 1)) : pSprite(sprite), mColour(colour) {};
+	~SpriteComponent() { delete pSprite; pSprite = nullptr; };
+
+	Sprite* pSprite = NULL;
+	Color mColour = Color(0, 0, 0, 1);
 };
 
 //Position
 struct Position2DComponent
 {
-	float locX;
-	float locY;
+	//Constructor(s) and Destructor
+	Position2DComponent(float locX, float locY) : mLocX(locX), mLocY(locY) {};
+	~Position2DComponent() {};
+
+	float mLocX;
+	float mLocY;
 };
 
 //Movement
 struct MovementComponent
 {
-	float moveSpeed;
-	float minPosX;
-	float maxPosX;
-	float minPosY;
-	float maxPosY;
+	//Constructor(s) and Destructor
+	MovementComponent(float moveSpeed, float minPosX, float maxPosX, float minPosY, float maxPosY)
+		:mMoveSpeed(moveSpeed), mMinPosX(minPosX), mMaxPosX(maxPosX)
+		, mMinPosY(minPosY), mMaxPosY(maxPosY) {};
+	~MovementComponent() {};
+
+	float mMoveSpeed;
+	float mMinPosX;
+	float mMaxPosX;
+	float mMinPosY;
+	float mMaxPosY;
 };
 
 //Health
 struct HealthComponent
 {
-	int maxHealth;
-	int currentHealth;
+	//Constructor(s) and Destructor
+	HealthComponent(int maxHealth) : mMaxHealth(maxHealth), mCurrentHealth(maxHealth) {};
+	~HealthComponent() {};
+
+	int mMaxHealth;
+	int mCurrentHealth;
 };
 
 //Projectile
 struct ProjectileComponent
 {
-	float speed;
-	int damageValue;
+	//Constructor(s) and Destructor
+	ProjectileComponent(float moveSpeed, int damageValue) : mMoveSpeed(moveSpeed), mDamageValue(damageValue) {};
+	~ProjectileComponent() {};
+
+	float mMoveSpeed;
+	int mDamageValue;
 };
 
 //----------------------------------------------------------------------- Systems
 class System
 {
 public:
+	System() {};
+	virtual ~System() {};
 	virtual void updateSystem() = 0;
 };
 
 class MovementSystem : public System
 {
 public:
+	MovementSystem();
+	~MovementSystem() {};
 	void updateSystem();
 };
 
 class CombatSystem : public System
 {
 public:
+	CombatSystem();
+	~CombatSystem() {};
 	void updateSystem();
 };
 
@@ -101,10 +129,10 @@ protected:
 public:
 	EcsNode();
 	~EcsNode();
-	void _notification(int p_what);
-	void _update();
 	void _ready();
+	void _update();
 	void _draw();
+	void _notification(int p_what);
 	//void _input(Variant event);
 };
 

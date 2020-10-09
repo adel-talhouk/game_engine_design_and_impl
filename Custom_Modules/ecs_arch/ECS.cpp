@@ -26,9 +26,19 @@ void EcsNode::_bind_methods()
 
 //----------------------------------------------------------------------- Systems
 
+MovementSystem::MovementSystem()
+	:System()
+{
+}
+
 void MovementSystem::updateSystem()
 {
 
+}
+
+CombatSystem::CombatSystem()
+	:System()
+{
 }
 
 void CombatSystem::updateSystem()
@@ -37,6 +47,12 @@ void CombatSystem::updateSystem()
 }
 
 //----------------------------------------------------------------------- GoDot class
+
+void EcsNode::_ready()
+{
+	//Create the new systems and add them to the systems vector
+
+}
 
 void EcsNode::_update()
 {
@@ -47,17 +63,22 @@ void EcsNode::_update()
 	}
 }
 
+void EcsNode::_draw()
+{
+
+}
+
 void EcsNode::_notification(int p_what) 
 {
 	switch (p_what) 
 	{
-	case NOTIFICATION_PROCESS:
-	{
-		_update();
-	}
 	case NOTIFICATION_READY:
 	{
 		_ready();
+	}
+	case NOTIFICATION_PROCESS:
+	{
+		_update();
 	}
 	case NOTIFICATION_DRAW:
 	{
