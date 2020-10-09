@@ -1,16 +1,20 @@
 #include "ECS.h"
 
-PlayerNode::PlayerNode() {}
-PlayerNode::~PlayerNode() {}
-EnemyNode::EnemyNode() {}
-EnemyNode::~EnemyNode() {}
+EcsNode::EcsNode() {}
+EcsNode::~EcsNode() {}
 
-void PlayerNode::_bind_methods()
+
+void EcsNode::_bind_methods()
 {
 
 }
 
-void EnemyNode::_bind_methods()
+void MovementSystem::updateSystem()
+{
+
+}
+
+void CombatSystem::updateSystem()
 {
 
 }

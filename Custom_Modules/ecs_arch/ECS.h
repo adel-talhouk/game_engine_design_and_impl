@@ -17,6 +17,8 @@ struct Entity
 	int ID;
 };
 
+//----------------------------------------------------------------------- Components
+
 //Sprite component
 struct SpriteComponent
 {
@@ -55,25 +57,46 @@ struct ProjectileComponent
 	int damageValue;
 };
 
+//----------------------------------------------------------------------- Systems
+class System
+{
+public:
+	virtual void updateSystem() = 0;
+};
+
+class MovementSystem : public System
+{
+public:
+	void updateSystem();
+};
+
+class CombatSystem : public System
+{
+public:
+	void updateSystem();
+};
+
+//----------------------------------------------------------------------- GoDot classes
+
 //Entity Node in GoDot
-class PlayerNode : public Node2D
+class EcsNode : public Node2D
 {
-	GDCLASS(PlayerNode, Node2D);
+	GDCLASS(EcsNode, Node2D);
 
 protected:
 	static void _bind_methods();
-	Entity mPlayerEntity;
+	std::vector<Entity> mEntitiesVector;
 
 	//Components
-	SpriteComponent mSpriteComponent;
-	Position2DComponent mPosition2DComponent;
-	MovementComponent mMovementComponent;
-	HealthComponent mHealthComponent;
-	ProjectileComponent mProjectileComponent;
+	std::vector<SpriteComponent> mSpriteComponentsVector;
+	std::vector<Position2DComponent> mPosition2DComponentsVector;
+	std::vector<MovementComponent> mMovementComponentsVector;
+	std::vector<HealthComponent> mHealthComponentsVector;
+	std::vector<ProjectileComponent> mProjectileComponentsVector;
 
 public:
-	PlayerNode();
-	~PlayerNode();
+	EcsNode();
+	~EcsNode();
 	void _notification(int p_what);
 	void _update();
 	void _ready();
@@ -81,28 +104,5 @@ public:
 	//void _input(Variant event);
 };
 
-class EnemyNode : public Node2D
-{
-	GDCLASS(EnemyNode, Node2D);
-
-protected:
-	static void _bind_methods();
-	Entity mEnemyEntity;
-
-	//Components
-	SpriteComponent mSpriteComponent;
-	Position2DComponent mPosition2DComponent;
-	MovementComponent mMovementComponent;
-	HealthComponent mHealthComponent;
-
-public:
-	EnemyNode();
-	~EnemyNode();
-	void _notification(int p_what);
-	void _update();
-	void _ready();
-	void _draw();
-	//void _input(Variant event);
-};
 
 #endif
