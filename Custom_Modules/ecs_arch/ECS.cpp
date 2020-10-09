@@ -64,14 +64,24 @@ void EcsNode::_ready()
 	int64_t childCount = get_child_count();
 	mEntitiesVector.resize(childCount);
 
+	//Shared components
+	Sprite* theSprite;
+
+
 	//Iterate through the children															//HERE
 	for (int64_t i = 0; i < childCount; i++) 
 	{
-		//Set the sprite
-		//s = (Sprite*)get_child(i);
-		//godotComponent gd;
-		//gd.s = s;
-		//gd.c = Color(1, 0, 0, 1.0f);
+		//Sprite Component
+		pSprite = (Sprite*)get_child(i);
+		SpriteComponent spriteComponent;
+		spriteComponent.pSprite = theSprite;
+		spriteComponent.mColour = Color(0, 0, 0, 1.0f);
+
+		//Health component
+
+
+		//Position component
+
 
 		//Make an entity, give it an ID, and add it to the vector
 		Entity entity;
@@ -79,7 +89,7 @@ void EcsNode::_ready()
 		mEntitiesVector.push_back(entity);
 
 		//Add the component to the map
-		//godotComponents.emplace(std::make_pair(e.ID, gd));
+		mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 	}
 }
 
