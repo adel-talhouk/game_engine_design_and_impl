@@ -59,6 +59,28 @@ void EcsNode::_ready()
 	mSystemsVector.push_back(pMovementSystem);
 	CombatSystem* pCombatSystem = new CombatSystem();
 	mSystemsVector.push_back(pCombatSystem);
+
+	//See how many children this node has
+	int64_t childCount = get_child_count();
+	mEntitiesVector.resize(childCount);
+
+	//Iterate through the children															//HERE
+	for (int64_t i = 0; i < childCount; i++) 
+	{
+		//Set the sprite
+		//s = (Sprite*)get_child(i);
+		//godotComponent gd;
+		//gd.s = s;
+		//gd.c = Color(1, 0, 0, 1.0f);
+
+		//Make an entity, give it an ID, and add it to the vector
+		Entity entity;
+		entity.ID = i;
+		mEntitiesVector.push_back(entity);
+
+		//Add the component to the map
+		//godotComponents.emplace(std::make_pair(e.ID, gd));
+	}
 }
 
 void EcsNode::_update()
