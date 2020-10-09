@@ -1,9 +1,16 @@
 #include "ECS.h"
 
-EntityNode::EntityNode() {}
-EntityNode::~EntityNode() {}
+PlayerNode::PlayerNode() {}
+PlayerNode::~PlayerNode() {}
+EnemyNode::EnemyNode() {}
+EnemyNode::~EnemyNode() {}
 
-void EntityNode::_bind_methods()
+void PlayerNode::_bind_methods()
+{
+
+}
+
+void EnemyNode::_bind_methods()
 {
 
 }

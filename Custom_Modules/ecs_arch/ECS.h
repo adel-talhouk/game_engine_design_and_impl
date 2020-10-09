@@ -56,29 +56,53 @@ struct ProjectileComponent
 };
 
 //Entity Node in GoDot
-class EntityNode : public Node2D
+class PlayerNode : public Node2D
 {
-	GDCLASS(EntityNode, Node2D);
+	GDCLASS(PlayerNode, Node2D);
 
 protected:
 	static void _bind_methods();
-	std::vector<Entity> mEntitiesVector;
-	std::map<int, SpriteComponent> mSprite2DComponentsVector;
-	std::map < int, Position2DComponent> mPosition2DComponentsVector;
-	std::map <int, MovementComponent> mMovementComponentsVector;
-	std::map <int, HealthComponent> mHealthComponentsVector;
-	std::map <int, ProjectileComponent> mProjectileComponentsVector;
+	Entity mPlayerEntity;
+
+	//Components
+	SpriteComponent mSpriteComponent;
+	Position2DComponent mPosition2DComponent;
+	MovementComponent mMovementComponent;
+	HealthComponent mHealthComponent;
+	ProjectileComponent mProjectileComponent;
 
 public:
-	EntityNode();
-	~EntityNode();
+	PlayerNode();
+	~PlayerNode();
 	void _notification(int p_what);
 	void _update();
 	void _ready();
 	void _draw();
 	//void _input(Variant event);
+};
 
+class EnemyNode : public Node2D
+{
+	GDCLASS(EnemyNode, Node2D);
 
+protected:
+	static void _bind_methods();
+	Entity mEnemyEntity;
+
+	//Components
+	SpriteComponent mSpriteComponent;
+	Position2DComponent mPosition2DComponent;
+	MovementComponent mMovementComponent;
+	HealthComponent mHealthComponent;
+
+public:
+	EnemyNode();
+	~EnemyNode();
+	void _notification(int p_what);
+	void _update();
+	void _ready();
+	void _draw();
+	//void _input(Variant event);
 };
 
 #endif
