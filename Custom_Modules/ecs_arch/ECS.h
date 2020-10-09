@@ -88,11 +88,11 @@ protected:
 	std::vector<Entity> mEntitiesVector;
 
 	//Components
-	std::vector<SpriteComponent> mSpriteComponentsVector;
-	std::vector<Position2DComponent> mPosition2DComponentsVector;
-	std::vector<MovementComponent> mMovementComponentsVector;
-	std::vector<HealthComponent> mHealthComponentsVector;
-	std::vector<ProjectileComponent> mProjectileComponentsVector;
+	std::map<int, SpriteComponent> mSpriteComponents;
+	std::map<int, Position2DComponent> mPosition2DComponents;
+	std::map<int, MovementComponent> mMovementComponents;
+	std::map<int, HealthComponent> mHealthComponents;
+	std::map<int, ProjectileComponent> mProjectileComponents;
 
 public:
 	EcsNode();
