@@ -1,29 +1,5 @@
 #include "ECS.h"
 
-EcsNode::EcsNode() {}
-EcsNode::~EcsNode()
-{
-	//Safety check
-	if (!mbIsDeleted)
-	{
-		//Clear the systems vector
-		for (auto it : mSystemsVector)
-		{
-			delete it;
-			it = nullptr;
-		}
-		mSystemsVector.clear();
-
-		mbIsDeleted = true;
-	}
-}
-
-
-void EcsNode::_bind_methods()
-{
-
-}
-
 //----------------------------------------------------------------------- Systems
 
 MovementSystem::MovementSystem()
@@ -48,10 +24,41 @@ void CombatSystem::updateSystem()
 
 //----------------------------------------------------------------------- GoDot class
 
+EcsNode::EcsNode()
+{
+	
+}
+
+EcsNode::~EcsNode()
+{
+	//Safety check
+	if (!mbIsDeleted)
+	{
+		//Clear the systems vector
+		for (auto it : mSystemsVector)
+		{
+			delete it;
+			it = nullptr;
+		}
+		mSystemsVector.clear();
+
+		mbIsDeleted = true;
+	}
+}
+
+
+void EcsNode::_bind_methods()
+{
+
+}
+
 void EcsNode::_ready()
 {
 	//Create the new systems and add them to the systems vector
-
+	MovementSystem* pMovementSystem = new MovementSystem();
+	mSystemsVector.push_back(pMovementSystem);
+	CombatSystem* pCombatSystem = new CombatSystem();
+	mSystemsVector.push_back(pCombatSystem);
 }
 
 void EcsNode::_update()
