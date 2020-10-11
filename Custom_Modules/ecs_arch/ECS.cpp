@@ -1,4 +1,5 @@
 #include "ECS.h"
+#include <iostream>
 
 //----------------------------------------------------------------------- Systems
 
@@ -89,32 +90,39 @@ void EcsNode::_ready()
 			//Health component
 			HealthComponent health(50);
 			mHealthComponents.emplace(std::make_pair(entity.ID, health));
+			std::cout << "Added health component to PlayerNode.\n";
 
 			//Position component
 			Position2DComponent pos(get_global_position());
 			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
+			std::cout << "Added position2d component to PlayerNode.\n";
 
 			//Movement component
 			MovementComponent movement(10.0f, 0.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
 			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
+			std::cout << "Added movement component to PlayerNode.\n";
 
 			//Combat component
 			CombatComponent combat(10, 50);
 			mCombatComponents.emplace(std::make_pair(entity.ID, combat));
+			std::cout << "Added combat component to PlayerNode.\n";
 		}
 		else    //Otherwise (enemy)
 		{
 			//Health component
 			HealthComponent health(10);
 			mHealthComponents.emplace(std::make_pair(entity.ID, health));
+			std::cout << "Added health component to " << get_child(i)->get_name() << ".\n";
 
 			//Position component
 			Position2DComponent pos(get_global_position());
 			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
+			std::cout << "Added position2d component to " << get_child(i)->get_name() << ".\n";
 
 			//Movement component
 			MovementComponent movement(7.5f, 0.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
 			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
+			std::cout << "Added movement component to " << get_child(i)->get_name() << ".\n";
 		}
 	}
 }
