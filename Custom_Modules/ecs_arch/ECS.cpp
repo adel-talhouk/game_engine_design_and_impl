@@ -95,21 +95,26 @@ void EcsNode::_ready()
 			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 			//Movement component
+			MovementComponent movement(10.0f, 0.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
+			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 
-
-			//Projectiles?
-
+			//Combat component
+			CombatComponent combat(10, 50);
+			mCombatComponents.emplace(std::make_pair(entity.ID, combat));
 		}
 		else    //Otherwise (enemy)
 		{
 			//Health component
-
+			HealthComponent health(10);
+			mHealthComponents.emplace(std::make_pair(entity.ID, health));
 
 			//Position component
-
+			Position2DComponent pos(get_global_position());
+			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 			//Movement component
-
+			MovementComponent movement(7.5f, 0.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
+			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 		}
 	}
 }

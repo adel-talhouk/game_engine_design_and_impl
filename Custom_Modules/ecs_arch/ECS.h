@@ -68,14 +68,14 @@ struct MovementComponent
 };
 
 //Projectile
-struct ProjectileComponent
+struct CombatComponent
 {
 	//Constructor(s) and Destructor
-	ProjectileComponent(float moveSpeed, int damageValue) : mMoveSpeed(moveSpeed), mDamageValue(damageValue) {};
-	~ProjectileComponent() {};
+	CombatComponent(int damageValue, float range) : mDamageValue(damageValue), mRange(range) {};
+	~CombatComponent() {};
 
-	float mMoveSpeed;
 	int mDamageValue;
+	float mRange;
 };
 
 //----------------------------------------------------------------------- Systems
@@ -120,7 +120,7 @@ protected:
 	std::map<int, HealthComponent> mHealthComponents;
 	std::map<int, Position2DComponent> mPosition2DComponents;
 	std::map<int, MovementComponent> mMovementComponents;
-	std::map<int, ProjectileComponent> mProjectileComponents;
+	std::map<int, CombatComponent> mCombatComponents;
 
 	//Systems
 	std::vector<System*> mSystemsVector;
