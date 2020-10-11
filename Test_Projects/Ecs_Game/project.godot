@@ -15,8 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Ecs_Project"
-run/main_scene="res://EcsNode.tscn"
+config/name="Ecs_Game"
 config/icon="res://icon.png"
 
 [rendering]
