@@ -68,28 +68,48 @@ void EcsNode::_ready()
 	Sprite* theSprite;
 
 
-	//Iterate through the children															//HERE
+	//Iterate through the children
 	for (int64_t i = 0; i < childCount; i++) 
 	{
-		//Sprite Component
-		pSprite = (Sprite*)get_child(i);
-		SpriteComponent spriteComponent;
-		spriteComponent.pSprite = theSprite;
-		spriteComponent.mColour = Color(0, 0, 0, 1.0f);
-
-		//Health component
-
-
-		//Position component
-
-
 		//Make an entity, give it an ID, and add it to the vector
 		Entity entity;
 		entity.ID = i;
 		mEntitiesVector.push_back(entity);
 
+		//Sprite Component
+		theSprite = (Sprite*)get_child(i);
+		SpriteComponent spriteComponent(theSprite);
+
 		//Add the component to the map
 		mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
+
+		//If it's the PlayerNode
+		if (get_child(i)->get_name() == "PlayerNode")
+		{
+			//Health component
+			HealthComponent health(50);
+			mHealthComponents.emplace(std::make_pair(entity.ID, health));
+
+			//Position component
+			Position2DComponent(get_child(i)->)											//Get position?
+
+			//Movement component
+
+
+			//Projectiles?
+
+		}
+		else    //Otherwise (enemy)
+		{
+			//Health component
+
+
+			//Position component
+
+
+			//Movement component
+
+		}
 	}
 }
 
