@@ -45,11 +45,10 @@ struct HealthComponent
 struct Position2DComponent
 {
 	//Constructor(s) and Destructor
-	Position2DComponent(float locX, float locY) : mLocX(locX), mLocY(locY) {};
+	Position2DComponent(Point2 pos) : mPosition(pos) {};
 	~Position2DComponent() {};
 
-	float mLocX;
-	float mLocY;
+	Point2 mPosition;
 };
 
 //Movement
@@ -134,6 +133,8 @@ public:
 	void _draw();
 	void _notification(int p_what);
 	//void _input(Variant event);
+
+	void setEntityPosition(int ID, Point2 pos);
 };
 
 

@@ -49,7 +49,7 @@ EcsNode::~EcsNode()
 
 void EcsNode::_bind_methods()
 {
-
+	ClassDB::bind_method(D_METHOD("setEntityPosition", "ID", "pos"), &EcsNode::setEntityPosition);
 }
 
 void EcsNode::_ready()
@@ -91,7 +91,8 @@ void EcsNode::_ready()
 			mHealthComponents.emplace(std::make_pair(entity.ID, health));
 
 			//Position component
-			Position2DComponent(get_child(i)->)											//Get position?
+			Position2DComponent pos(get_global_position());
+			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 			//Movement component
 
@@ -144,5 +145,18 @@ void EcsNode::_notification(int p_what)
 		_draw();
 	}
 
+	}
+}
+
+void EcsNode::setEntityPosition(int ID, Point2 pos)
+{
+	//Get the Position2DComponent
+	std::map<int, Position2DComponent>::iterator it;
+	it = mPosition2DComponents.find(ID);
+
+	if (it != mPosition2DComponents.end())
+	{
+		//Set the position
+		it->second = Position2DComponent(pos);
 	}
 }
