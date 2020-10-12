@@ -65,28 +65,25 @@ void EcsNode::_ready()
 	int64_t childCount = get_child_count();
 	mEntitiesVector.resize(childCount);
 
-	//Shared components
-	Sprite* theSprite;
-
-
 	//Iterate through the children
 	for (int64_t i = 0; i < childCount; i++) 
 	{
+		std::cout << "For-loop: i = " << i << ".\n";
 		//Make an entity, give it an ID, and add it to the vector
 		Entity entity;
 		entity.ID = i;
 		mEntitiesVector.push_back(entity);
-
-		//Sprite Component
-		theSprite = (Sprite*)get_child(i);
-		SpriteComponent spriteComponent(theSprite);
-
-		//Add the component to the map
-		mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
-
+		
 		//If it's the PlayerNode
 		if (get_child(i)->get_name() == "PlayerNode")
 		{
+			std::cout << "Inside if-statement.\n";
+
+			//Sprite component
+			SpriteComponent spriteComponent((Sprite*)get_child(i));
+			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
+			std::cout << "Added sprite component to PlayerNode.\n";
+
 			//Health component
 			HealthComponent health(50);
 			mHealthComponents.emplace(std::make_pair(entity.ID, health));
@@ -109,6 +106,13 @@ void EcsNode::_ready()
 		}
 		else    //Otherwise (enemy)
 		{
+			std::cout << "Inside else-statement.\n";
+
+			//Sprite component
+			SpriteComponent spriteComponent((Sprite*)get_child(i));
+			//mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
+			std::cout << "Added sprite component to " << get_child(i)->get_name() << ".\n";
+
 			//Health component
 			HealthComponent health(10);
 			mHealthComponents.emplace(std::make_pair(entity.ID, health));
@@ -124,6 +128,8 @@ void EcsNode::_ready()
 			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 			std::cout << "Added movement component to " << get_child(i)->get_name() << ".\n";
 		}
+
+		std::cout << "Outside of if-else-statement, in for-loop.\n";
 	}
 }
 
