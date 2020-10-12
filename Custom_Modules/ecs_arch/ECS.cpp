@@ -110,7 +110,7 @@ void EcsNode::_ready()
 
 			//Sprite component
 			SpriteComponent spriteComponent((Sprite*)get_child(i));
-			//mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
+			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 			std::cout << "Added sprite component to " << get_child(i)->get_name() << ".\n";
 
 			//Health component
@@ -135,6 +135,8 @@ void EcsNode::_ready()
 
 void EcsNode::_update()
 {
+	//update();
+
 	//Update the systems
 	for (auto it : mSystemsVector)
 	{
@@ -177,5 +179,6 @@ void EcsNode::setEntityPosition(int ID, Point2 pos)
 	{
 		//Set the position
 		it->second = Position2DComponent(pos);
+		std::cout << "New position: " << pos.x << ", " << pos.y << ".\n";
 	}
 }
