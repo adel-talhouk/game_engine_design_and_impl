@@ -86,7 +86,6 @@ struct CombatComponent
 class EcsNode : public Node2D
 {
 	GDCLASS(EcsNode, Node2D);
-	bool mbIsDeleted = false;	//Safety check
 
 protected:
 	static void _bind_methods();
@@ -120,9 +119,6 @@ public:
 	void _update();
 	void _draw();
 	void _notification(int p_what);
-
-	//GDScript-accessible methods
-	//void setTexture(int ID, const Ref<Texture>& theTexture);
 };
 
 
