@@ -23,10 +23,10 @@ struct Entity
 struct SpriteComponent
 {
 	//Constructor(s) and Destructor
-	SpriteComponent(Sprite* sprite, Color colour = Color(0.0f, 0.0f, 0.0f, 1.0f)) : pSprite(sprite), mColour(colour) {};
-	~SpriteComponent() { pSprite = nullptr; };
+	SpriteComponent(Ref<Texture> textureRef, Color colour = Color(0.0f, 0.0f, 0.0f, 1.0f)) : mTextureRef(textureRef), mColour(colour) {};
+	~SpriteComponent() { /*pSprite = nullptr;*/ };
 
-	Sprite* pSprite;
+	//Sprite* pSprite;
 	Ref<Texture> mTextureRef;
 	Color mColour;
 };

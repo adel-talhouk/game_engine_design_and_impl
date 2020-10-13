@@ -8,17 +8,17 @@ extends EcsNode
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+#func _ready():
 #	playerCurrentPos = playerStartPos
 #	setEntityPosition(0, playerCurrentPos)
-	pass # Replace with function body.
+#	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+#func _process(delta):
 #	playerCurrentPos += playerMoveIncrement
 #	setEntityPosition(0, playerCurrentPos)
-	pass
+#	pass
 
-func _draw():
-	pass
+#func _draw():
+#	pass

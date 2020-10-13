@@ -6,7 +6,7 @@
 
 EcsNode::EcsNode()
 {
-	
+	set_process(true);
 }
 
 EcsNode::~EcsNode()
@@ -45,9 +45,10 @@ void EcsNode::_ready()
 		if (get_child(i)->get_name() == "PlayerNode")
 		{
 			//Sprite component
-			SpriteComponent spriteComponent((Sprite*)get_child(i));
-			spriteComponent.mTextureRef = spriteComponent.pSprite->get_texture();
-			spriteComponent.pSprite->set_texture(spriteComponent.mTextureRef);
+			Sprite* pSprite = (Sprite*)get_child(i);
+			SpriteComponent spriteComponent(pSprite->get_texture());
+			//spriteComponent.mTextureRef = spriteComponent.pSprite->get_texture();
+			//spriteComponent.pSprite->set_texture(spriteComponent.mTextureRef);
 			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
 			//Health component
@@ -59,7 +60,7 @@ void EcsNode::_ready()
 			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 			//Movement component
-			MovementComponent movement(10.0f, 10.0f, 10.0f, 0.0f, get_viewport_rect().get_size().y, true);
+			MovementComponent movement(10.0f, 10.0f, 10.0f, 0.0f, get_viewport_rect().get_size().y - 100, true);
 			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 
 			//Combat component
@@ -69,9 +70,10 @@ void EcsNode::_ready()
 		else    //Otherwise (enemy)
 		{
 			//Sprite component
-			SpriteComponent spriteComponent((Sprite*)get_child(i));
-			spriteComponent.mTextureRef = spriteComponent.pSprite->get_texture();
-			spriteComponent.pSprite->set_texture(spriteComponent.mTextureRef);
+			Sprite* pSprite = (Sprite*)get_child(i);
+			SpriteComponent spriteComponent(pSprite->get_texture());
+			//spriteComponent.mTextureRef = spriteComponent.pSprite->get_texture();
+			//spriteComponent.pSprite->set_texture(spriteComponent.mTextureRef);
 			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
 			//Health component
@@ -122,7 +124,6 @@ void EcsNode::_update()
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
 						mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
-						std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 					}
 				}
 			}
@@ -160,7 +161,6 @@ void EcsNode::_update()
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
 						mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
-						std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 					}
 				}
 			}
@@ -190,8 +190,6 @@ void EcsNode::_update()
 					//Update the position
 					Point2 newPosition(newPosX, position2DComponent.mPosition.y);
 					mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
-
-					//std::cout << "Enemy " << it.ID << " new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 				}
 			}
 		}
@@ -205,7 +203,7 @@ void EcsNode::_draw()
 		//Find all the entities with the sprite component
 		if (mSpriteComponents.find(it.ID) != mSpriteComponents.end())
 		{
-			Sprite* pSprite = mSpriteComponents.find(it.ID)->second.pSprite;
+			Ref<Texture> textureRef = mSpriteComponents.find(it.ID)->second.mTextureRef;
 
 			//Get the position2D components
 			if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
@@ -214,11 +212,9 @@ void EcsNode::_draw()
 
 				//Draw
 				//pSprite->_notification(NOTIFICATION_DRAW);
-				//pSprite->set_modulate(mSpriteComponents.find(it.ID)->second.mColour);
-				//pSprite->set_frame_coords(drawPos);
 				//std::cout << "Entity " << it.ID << " has SpriteComponent and Position2DComponent. Pos: " << drawPos.x << ", " << drawPos.y << std::endl;
 
-				draw_texture(mSpriteComponents.find(it.ID)->second.mTextureRef, drawPos);
+				draw_texture(textureRef, drawPos);
 			}
 		}
 	}
@@ -231,15 +227,18 @@ void EcsNode::_notification(int p_what)
 	case NOTIFICATION_READY:
 	{
 		_ready();
+		break;
 	}
 	case NOTIFICATION_PROCESS:
 	{
 		_update();
 		update();
+		break;
 	}
 	case NOTIFICATION_DRAW:
 	{
 		_draw();
+		break;
 	}
 
 	}
