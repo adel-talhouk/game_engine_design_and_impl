@@ -28,6 +28,8 @@ EcsNode::~EcsNode()
 void EcsNode::_bind_methods()
 {
 	//ClassDB::bind_method(D_METHOD("setEntityPosition", "ID", "pos"), &EcsNode::setEntityPosition);
+	//ClassDB::bind_method(D_METHOD("setTexture", "theTexture", "ID"), &EcsNode::setTexture);
+	//ADD_SIGNAL(MethodInfo("texture_changed"));
 }
 
 void EcsNode::_ready()
@@ -251,3 +253,16 @@ void EcsNode::_notification(int p_what)
 
 	}
 }
+
+//void EcsNode::setTexture(int ID, const Ref<Texture>& theTexture)
+//{
+//	for (auto& it : mEntitiesVector)
+//	{
+//		//Find all the entities with the sprite component
+//		if (mSpriteComponents.find(it.ID) != mSpriteComponents.end())
+//		{
+//			//Set the texture
+//			mSpriteComponents.find(it.ID)->second.mTextureRef = theTexture;
+//		}
+//	}
+//}

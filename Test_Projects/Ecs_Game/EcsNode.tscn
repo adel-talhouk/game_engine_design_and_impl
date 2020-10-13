@@ -6,11 +6,14 @@
 [node name="EcsNode" type="EcsNode"]
 
 [node name="PlayerNode" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 1 )
 
 [node name="Enemy" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 2 )
 
 [node name="Enemy2" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0, 400 )
 texture = ExtResource( 2 )

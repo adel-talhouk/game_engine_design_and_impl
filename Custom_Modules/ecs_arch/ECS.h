@@ -120,6 +120,9 @@ public:
 	void _update();
 	void _draw();
 	void _notification(int p_what);
+
+	//GDScript-accessible methods
+	//void setTexture(int ID, const Ref<Texture>& theTexture);
 };
 
 
