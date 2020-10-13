@@ -217,34 +217,11 @@ void EcsNode::_draw()
 				//pSprite->set_modulate(mSpriteComponents.find(it.ID)->second.mColour);
 				//pSprite->set_frame_coords(drawPos);
 				//std::cout << "Entity " << it.ID << " has SpriteComponent and Position2DComponent. Pos: " << drawPos.x << ", " << drawPos.y << std::endl;
+
+				draw_texture(mSpriteComponents.find(it.ID)->second.mTextureRef, drawPos);
 			}
 		}
 	}
-
-	//draw_line(Vector2(0, 0), Vector2(50, 50), Color(255, 0, 0), 1);
-	//Vector2 pos = get_global_position();
-
-	//Color c = Color(1, 1, 1, 1);
-	//Vector<Color> colors;
-	//colors.push_back(c);
-	//colors.push_back(c);
-	//colors.push_back(c);
-	//colors.push_back(c);
-
-
-	//Vector<Vector2> pts;
-	//pts.push_back(pos);
-	//pts.push_back(Vector2(pos.x + 30, pos.y));
-	//pts.push_back(Vector2(pos.x + 30, pos.y - 30));
-	//pts.push_back(Vector2(pos.x, pos.y - 30));
-
-	//Vector<Vector2> uvs;
-	//uvs.push_back(Vector2(1, 1));
-	//uvs.push_back(Vector2(0, 1));
-	//uvs.push_back(Vector2(0, 0));
-	//uvs.push_back(Vector2(1, 0));
-
-	//draw_polygon(pts, colors, uvs, mTextureRef);
 }
 
 void EcsNode::_notification(int p_what) 
@@ -258,6 +235,7 @@ void EcsNode::_notification(int p_what)
 	case NOTIFICATION_PROCESS:
 	{
 		_update();
+		update();
 	}
 	case NOTIFICATION_DRAW:
 	{
