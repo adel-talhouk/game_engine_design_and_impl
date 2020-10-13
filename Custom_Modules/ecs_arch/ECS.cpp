@@ -1,4 +1,5 @@
 #include "ECS.h"
+#include "scene/2d/sprite.h"
 #include <iostream>
 
 //----------------------------------------------------------------------- Systems
@@ -105,6 +106,7 @@ void EcsNode::_ready()
 		{
 			//Sprite component
 			SpriteComponent spriteComponent((Sprite*)get_child(i));
+			mTextureRef = spriteComponent.pSprite->get_texture();
 			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
 			//Health component
@@ -127,6 +129,7 @@ void EcsNode::_ready()
 		{
 			//Sprite component
 			SpriteComponent spriteComponent((Sprite*)get_child(i));
+			mTextureRef = spriteComponent.pSprite->get_texture();
 			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
 			//Health component
@@ -152,7 +155,7 @@ void EcsNode::_update()
 	//	it->updateSystem();
 	//}
 
-	//W Key
+	//W Key		https://docs.godotengine.org/en/stable/classes/class_inputeventkey.html#class-inputeventkey, https://docs.godotengine.org/en/stable/classes/class_@globalscope.html#enum-globalscope-keylist
 	if (Input::get_singleton()->is_key_pressed(KEY_W))
 	{
 		for (auto& it : mEntitiesVector)
@@ -246,6 +249,42 @@ void EcsNode::_update()
 void EcsNode::_draw()
 {
 	std::cout << "Inside _draw().\n";
+
+	for (auto& it : mEntitiesVector)
+	{
+		//Find all the entities with the sprite component
+		if (mSpriteComponents.find(it.ID) != mSpriteComponents.end())
+		{
+			Sprite* pSprite = mSpriteComponents.find(it.ID)->second.pSprite;
+
+			pSprite->_notification(NOTIFICATION_DRAW);
+		}
+	}
+
+	//draw_line(Vector2(0, 0), Vector2(50, 50), Color(255, 0, 0), 1);
+	//Vector2 pos = get_global_position();
+
+	//Color c = Color(1, 1, 1, 1);
+	//Vector<Color> colors;
+	//colors.push_back(c);
+	//colors.push_back(c);
+	//colors.push_back(c);
+	//colors.push_back(c);
+
+
+	//Vector<Vector2> pts;
+	//pts.push_back(pos);
+	//pts.push_back(Vector2(pos.x + 30, pos.y));
+	//pts.push_back(Vector2(pos.x + 30, pos.y - 30));
+	//pts.push_back(Vector2(pos.x, pos.y - 30));
+
+	//Vector<Vector2> uvs;
+	//uvs.push_back(Vector2(1, 1));
+	//uvs.push_back(Vector2(0, 1));
+	//uvs.push_back(Vector2(0, 0));
+	//uvs.push_back(Vector2(1, 0));
+
+	//draw_polygon(pts, colors, uvs, mTextureRef);
 }
 
 void EcsNode::_notification(int p_what) 

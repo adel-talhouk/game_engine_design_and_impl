@@ -117,6 +117,7 @@ protected:
 	/*static */std::vector<Entity> mEntitiesVector;
 
 	//Components
+	Ref<Texture> mTextureRef;
 	std::map<int, SpriteComponent> mSpriteComponents;
 	std::map<int, HealthComponent> mHealthComponents;
 	std::map<int, Position2DComponent> mPosition2DComponents;
