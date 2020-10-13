@@ -3,6 +3,7 @@
 #include <core/engine.h>
 
 #include <iostream>
+#include <ctime>
 
 //----------------------------------------------------------------------- GoDot class
 
@@ -10,6 +11,9 @@ EcsNode::EcsNode()
 {
 	//Make it process automatically
 	set_process(true);
+
+	//Seed rand
+	srand(time(0));
 }
 
 EcsNode::~EcsNode()
@@ -85,7 +89,8 @@ void EcsNode::_ready()
 				mHealthComponents.emplace(std::make_pair(entity.ID, health));
 
 				//Position component
-				Position2DComponent pos(get_global_position());
+				Point2 positionOffset((i - 1) * rand() % 500 + 50, (i - 1) * 250);	//i - 1 to account for the player being at index 0
+				Position2DComponent pos(get_global_position() + positionOffset);
 				mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 				//Movement component
