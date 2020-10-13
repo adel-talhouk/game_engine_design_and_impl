@@ -65,7 +65,7 @@ void EcsNode::_ready()
 				mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 
 				//Combat component
-				CombatComponent combat(10, 50);
+				CombatComponent combat(10, 300);
 				mCombatComponents.emplace(std::make_pair(entity.ID, combat));
 			}
 			else    //Otherwise (enemy)
@@ -185,26 +185,31 @@ void EcsNode::_update()
 			//Go through the rest of the entities
 			for (auto& it : mEntitiesVector)
 			{
-				//Components
-				Position2DComponent enemyPosition2DComponent = mPosition2DComponents.find(it.ID)->second;
-				MovementComponent enemyMovementComponent = mMovementComponents.find(it.ID)->second;
-				HealthComponent enemyHealthComponent = mHealthComponents.find(it.ID)->second;
-
-				//Calculate the distance
-				distance = enemyPosition2DComponent.mPosition - playerPosition2DComponent.mPosition;
-
-				//Check if it's less than the range
-				if (distance.length <= playerCombatComponent.mRange)
+				//Make sure this is not the player
+				if (it.ID != playerID)
 				{
-					//Inflict damage to the enemy
-					enemyHealthComponent.mCurrentHealth -= playerCombatComponent.mDamageValue;
+					//Components
+					Position2DComponent enemyPosition2DComponent = mPosition2DComponents.find(it.ID)->second;
+					MovementComponent enemyMovementComponent = mMovementComponents.find(it.ID)->second;
+					HealthComponent enemyHealthComponent = mHealthComponents.find(it.ID)->second;
 
-					//If it is 0
-					if (enemyHealthComponent.mCurrentHealth <= 0)
+					//Calculate the distance
+					distance = enemyPosition2DComponent.mPosition - playerPosition2DComponent.mPosition;
+
+					//Check if it's less than the range
+					if (distance.length() <= playerCombatComponent.mRange)
 					{
-						//Reset their position
-						Point2 newPosition(enemyMovementComponent.mMaxPosX, enemyPosition2DComponent.mPosition.y);
-						mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
+						//Inflict damage to the enemy
+						enemyHealthComponent.mCurrentHealth -= playerCombatComponent.mDamageValue;
+
+						//If it is 0
+						if (enemyHealthComponent.mCurrentHealth <= 0)
+						{
+							//Reset their position
+							Point2 newPosition(enemyMovementComponent.mMaxPosX, enemyPosition2DComponent.mPosition.y);	//Give it a new random Y pos
+							mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
+							std::cout << "Enemy killed.\n";
+						}
 					}
 				}
 			}
