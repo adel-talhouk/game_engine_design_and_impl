@@ -86,10 +86,11 @@ void EcsNode::_ready()
 				mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 				//Movement component
-				MovementComponent movement(7.5f, 10.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
+				MovementComponent movement(10.0f, 10.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
 				mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 			}
 		}
+		std::cout << "\t\t Press the Space Bar to start the game.\n\n\n\n";
 	}
 }
 
@@ -221,7 +222,9 @@ void EcsNode::_update()
 							float randomRespawnPosY = rand() % (int)enemyMovementComponent.mMaxPosY - ((int)enemyMovementComponent.mMinPosY + 100);
 							Point2 newPosition(enemyMovementComponent.mMaxPosX, randomRespawnPosY);
 							mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
-							std::cout << "Enemy killed.\n";
+							mScore++;
+							std::cout << "Enemy killed. Score: " << mScore << ".\n";
+
 						}
 					}
 				}
@@ -250,7 +253,7 @@ void EcsNode::_update()
 							newPosX = movementComponent.mMaxPosX;
 
 							//Loss state
-							//get_tree().quit();	//Not working
+							std::cout << "\n\n\t\tGAME OVER. SCORE: " << mScore << " PTS.\n\n\n\n";
 							mbGameEnd = true;
 						}
 

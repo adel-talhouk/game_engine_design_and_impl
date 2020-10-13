@@ -93,6 +93,9 @@ class EcsNode : public Node2D
 	//Game end
 	bool mbGameEnd = false;
 
+	//Score
+	int mScore = 0;
+
 protected:
 	static void _bind_methods();
 	
