@@ -162,15 +162,22 @@ void EcsNode::_update()
 			{
 				MovementComponent movementComponent = mMovementComponents.find(it.ID)->second;
 				
-				if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
+				//As long as this is the player
+				if (movementComponent.mbIsPlayer)
 				{
-					Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
+					if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
+					{
+						Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
+						float newPosY = position2DComponent.mPosition.y - movementComponent.mMoveSpeed;
 
-					//Update the position
+						//Check the bounds
+						if (newPosY > movementComponent.mMaxPosY)
+							newPosY = movementComponent.mMaxPosY;
 
-
-					//Check the bounds
-
+						//Update the position
+						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
+						position2DComponent.mPosition = newPosition;
+					}
 				}
 			}
 		}
@@ -187,17 +194,20 @@ void EcsNode::_update()
 				MovementComponent movementComponent = mMovementComponents.find(it.ID)->second;
 
 				//As long as this is the player
-				if (movementComponent.getIsPlayer())
+				if (movementComponent.mbIsPlayer)
 				{
 					if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
 					{
 						Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
-
-						//Update the position
-
+						float newPosY = position2DComponent.mPosition.y + movementComponent.mMoveSpeed;
 
 						//Check the bounds
+						if (newPosY > movementComponent.mMaxPosY)
+							newPosY = movementComponent.mMaxPosY;
 
+						//Update the position
+						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
+						position2DComponent.mPosition = newPosition;
 					}
 				}
 			}
@@ -213,17 +223,20 @@ void EcsNode::_update()
 			MovementComponent movementComponent = mMovementComponents.find(it.ID)->second;
 
 			//As long as it's not a player
-			if (!movementComponent.getIsPlayer())
+			if (!movementComponent.mbIsPlayer)
 			{
 				if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
 				{
 					Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
-
-					//Update the position
-
+					float newPosX = position2DComponent.mPosition.x - movementComponent.mMoveSpeed;
 
 					//Check the bounds
+					if (newPosX < movementComponent.mMinPosX)
+						newPosX = movementComponent.mMaxPosX;
 
+					//Update the position
+					Point2 newPosition(newPosX, position2DComponent.mPosition.y);
+					position2DComponent.mPosition = newPosition;
 				}
 			}
 		}
@@ -264,7 +277,7 @@ void EcsNode::setEntityPosition(int ID, Point2 pos)
 	if (it != mPosition2DComponents.end())
 	{
 		//Set the position
-		it->second = Position2DComponent(pos);
+		it->second.mPosition = pos;
 		std::cout << "New position: " << pos.x << ", " << pos.y << ".\n";
 	}
 }

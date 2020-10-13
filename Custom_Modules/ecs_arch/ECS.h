@@ -59,7 +59,6 @@ struct MovementComponent
 		:mMoveSpeed(moveSpeed), mMinPosX(minPosX), mMaxPosX(maxPosX)
 		, mMinPosY(minPosY), mMaxPosY(maxPosY), mbIsPlayer(isPlayer) {};
 	~MovementComponent() {};
-	const bool getIsPlayer() const { return mbIsPlayer; };
 
 	float mMoveSpeed;
 	float mMinPosX;
