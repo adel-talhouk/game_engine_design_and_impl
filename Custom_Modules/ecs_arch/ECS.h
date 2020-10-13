@@ -24,7 +24,7 @@ struct SpriteComponent
 {
 	//Constructor(s) and Destructor
 	SpriteComponent(Ref<Texture> textureRef, Color colour = Color(0.0f, 0.0f, 0.0f, 1.0f)) : mTextureRef(textureRef), mColour(colour) {};
-	~SpriteComponent() { /*pSprite = nullptr;*/ };
+	~SpriteComponent() {};
 
 	//Sprite* pSprite;
 	Ref<Texture> mTextureRef;
@@ -69,7 +69,7 @@ struct MovementComponent
 	bool mbIsPlayer;
 };
 
-//Projectile
+//Combat
 struct CombatComponent
 {
 	//Constructor(s) and Destructor
@@ -120,9 +120,6 @@ public:
 	void _update();
 	void _draw();
 	void _notification(int p_what);
-
-	//Method(s) in GdScript
-	//void setEntityPosition(int ID, Point2 pos);
 };
 
 

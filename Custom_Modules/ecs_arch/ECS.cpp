@@ -47,8 +47,6 @@ void EcsNode::_ready()
 			//Sprite component
 			Sprite* pSprite = (Sprite*)get_child(i);
 			SpriteComponent spriteComponent(pSprite->get_texture());
-			//spriteComponent.mTextureRef = spriteComponent.pSprite->get_texture();
-			//spriteComponent.pSprite->set_texture(spriteComponent.mTextureRef);
 			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
 			//Health component
@@ -72,8 +70,6 @@ void EcsNode::_ready()
 			//Sprite component
 			Sprite* pSprite = (Sprite*)get_child(i);
 			SpriteComponent spriteComponent(pSprite->get_texture());
-			//spriteComponent.mTextureRef = spriteComponent.pSprite->get_texture();
-			//spriteComponent.pSprite->set_texture(spriteComponent.mTextureRef);
 			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
 			//Health component
@@ -93,7 +89,7 @@ void EcsNode::_ready()
 
 void EcsNode::_update()
 {
-	//W Key		https://docs.godotengine.org/en/stable/classes/class_inputeventkey.html#class-inputeventkey, https://docs.godotengine.org/en/stable/classes/class_@globalscope.html#enum-globalscope-keylist
+	//W Key		https://docs.godotengine.org/en/stable/classes/class_@globalscope.html#enum-globalscope-keylist
 	if (Input::get_singleton()->is_key_pressed(KEY_W))
 	{
 		for (auto& it : mEntitiesVector)
@@ -211,9 +207,6 @@ void EcsNode::_draw()
 				Point2 drawPos = mPosition2DComponents.find(it.ID)->second.mPosition;
 
 				//Draw
-				//pSprite->_notification(NOTIFICATION_DRAW);
-				//std::cout << "Entity " << it.ID << " has SpriteComponent and Position2DComponent. Pos: " << drawPos.x << ", " << drawPos.y << std::endl;
-
 				draw_texture(textureRef, drawPos);
 			}
 		}
@@ -243,17 +236,3 @@ void EcsNode::_notification(int p_what)
 
 	}
 }
-
-//void EcsNode::setEntityPosition(int ID, Point2 pos)
-//{
-//	//Get the Position2DComponent
-//	std::map<int, Position2DComponent>::iterator it;
-//	it = mPosition2DComponents.find(ID);
-//
-//	if (it != mPosition2DComponents.end())
-//	{
-//		//Set the position
-//		it->second.mPosition = pos;
-//		//std::cout << "New position: " << pos.x << ", " << pos.y << ".\n";
-//	}
-//}
