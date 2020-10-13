@@ -81,7 +81,8 @@ void EcsNode::_ready()
 
 				//Position component
 				Point2 positionOffset((i - 1) * rand() % 500 + 50, (i - 1) * 250);	//i - 1 to account for the player being at index 0
-				Position2DComponent pos(get_global_position() + positionOffset);
+				Point2 spawnPos(get_viewport_rect().get_size().x - positionOffset.x, positionOffset.y);
+				Position2DComponent pos (spawnPos);
 				mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 				//Movement component
