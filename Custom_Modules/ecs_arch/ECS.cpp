@@ -176,8 +176,14 @@ void EcsNode::_update()
 						float newPosY = position2DComponent.mPosition.y - movementComponent.mMoveSpeed;
 
 						//Check the bounds
-						if (newPosY > movementComponent.mMaxPosY)
-							newPosY = movementComponent.mMaxPosY;
+						if (newPosY < movementComponent.mMinPosY)
+							newPosY = movementComponent.mMinPosY;
+
+						//Clamp x pos
+						if (position2DComponent.mPosition.x > movementComponent.mMaxPosX)
+							position2DComponent.mPosition.x = movementComponent.mMaxPosX;
+						if (position2DComponent.mPosition.x < movementComponent.mMinPosX)
+							position2DComponent.mPosition.x = movementComponent.mMinPosX;
 
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
@@ -211,6 +217,12 @@ void EcsNode::_update()
 						//Check the bounds
 						if (newPosY > movementComponent.mMaxPosY)
 							newPosY = movementComponent.mMaxPosY;
+
+						//Clamp x pos
+						if (position2DComponent.mPosition.x > movementComponent.mMaxPosX)
+							position2DComponent.mPosition.x = movementComponent.mMaxPosX;
+						if (position2DComponent.mPosition.x < movementComponent.mMinPosX)
+							position2DComponent.mPosition.x = movementComponent.mMinPosX;
 
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
