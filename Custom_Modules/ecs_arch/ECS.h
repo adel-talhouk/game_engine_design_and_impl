@@ -81,29 +81,29 @@ struct CombatComponent
 };
 
 //----------------------------------------------------------------------- Systems
-class System
-{
-public:
-	System() {};
-	virtual ~System() {};
-	virtual void updateSystem() = 0;
-};
-
-class MovementSystem : public System
-{
-public:
-	MovementSystem();
-	~MovementSystem() {};
-	void updateSystem();
-};
-
-class CombatSystem : public System
-{
-public:
-	CombatSystem();
-	~CombatSystem() {};
-	void updateSystem();
-};
+//class System
+//{
+//public:
+//	System() {};
+//	virtual ~System() {};
+//	virtual void updateSystem() = 0;
+//};
+//
+//class MovementSystem : public System
+//{
+//public:
+//	MovementSystem();
+//	~MovementSystem() {};
+//	void updateSystem();
+//};
+//
+//class CombatSystem : public System
+//{
+//public:
+//	CombatSystem();
+//	~CombatSystem() {};
+//	void updateSystem();
+//};
 
 //----------------------------------------------------------------------- GoDot class
 
@@ -115,10 +115,11 @@ class EcsNode : public Node2D
 
 protected:
 	static void _bind_methods();
-	/*static */std::vector<Entity> mEntitiesVector;
+	
+	//Entities
+	std::vector<Entity> mEntitiesVector;
 
 	//Components
-	//Ref<Texture> mTextureRef;
 	std::map<int, SpriteComponent> mSpriteComponents;
 	std::map<int, HealthComponent> mHealthComponents;
 	std::map<int, Position2DComponent> mPosition2DComponents;
@@ -126,7 +127,7 @@ protected:
 	std::map<int, CombatComponent> mCombatComponents;
 
 	//Systems
-	std::vector<System*> mSystemsVector;
+	//std::vector<System*> mSystemsVector;
 
 public:
 
@@ -140,9 +141,7 @@ public:
 	void _draw();
 	void _notification(int p_what);
 
-	//static std::vector<Entity>& getEntitiesVector() { return mEntitiesVector; };
-
-	//Methods in GdScript
+	//Method(s) in GdScript
 	//void setEntityPosition(int ID, Point2 pos);
 };
 

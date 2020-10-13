@@ -4,9 +4,9 @@
 
 //----------------------------------------------------------------------- Systems
 
-MovementSystem::MovementSystem()
-	:System()
-{
+//MovementSystem::MovementSystem()
+//	:System()
+//{
 	////Player input
 	//if (Input::get_singleton()->is_key_pressed(KEY_W)) 
 	//{
@@ -34,22 +34,22 @@ MovementSystem::MovementSystem()
 
 	////Enemy constant move
 
-}
+//}
 
-void MovementSystem::updateSystem()
-{
-	std::cout << "MovementSystem::updateSystem().\n";
-}
-
-CombatSystem::CombatSystem()
-	:System()
-{
-}
-
-void CombatSystem::updateSystem()
-{
-	std::cout << "CombatSystem::updateSystem().\n";
-}
+//void MovementSystem::updateSystem()
+//{
+//	std::cout << "MovementSystem::updateSystem().\n";
+//}
+//
+//CombatSystem::CombatSystem()
+//	:System()
+//{
+//}
+//
+//void CombatSystem::updateSystem()
+//{
+//	std::cout << "CombatSystem::updateSystem().\n";
+//}
 
 //----------------------------------------------------------------------- GoDot class
 
@@ -61,18 +61,18 @@ EcsNode::EcsNode()
 EcsNode::~EcsNode()
 {
 	//Safety check
-	if (!mbIsDeleted)
-	{
-		//Clear the systems vector
-		for (auto it : mSystemsVector)
-		{
-			delete it;
-			it = nullptr;
-		}
-		mSystemsVector.clear();
+	//if (!mbIsDeleted)
+	//{
+	//	//Clear the systems vector
+	//	for (auto it : mSystemsVector)
+	//	{
+	//		delete it;
+	//		it = nullptr;
+	//	}
+	//	mSystemsVector.clear();
 
-		mbIsDeleted = true;
-	}
+	//	mbIsDeleted = true;
+	//}
 }
 
 
@@ -84,10 +84,10 @@ void EcsNode::_bind_methods()
 void EcsNode::_ready()
 {
 	//Create the new systems and add them to the systems vector
-	MovementSystem* pMovementSystem = new MovementSystem();
-	mSystemsVector.push_back(pMovementSystem);
-	CombatSystem* pCombatSystem = new CombatSystem();
-	mSystemsVector.push_back(pCombatSystem);
+	//MovementSystem* pMovementSystem = new MovementSystem();
+	//mSystemsVector.push_back(pMovementSystem);
+	//CombatSystem* pCombatSystem = new CombatSystem();
+	//mSystemsVector.push_back(pCombatSystem);
 
 	//See how many children this node has
 	int64_t childCount = get_child_count();
@@ -257,7 +257,7 @@ void EcsNode::_update()
 					Point2 newPosition(newPosX, position2DComponent.mPosition.y);
 					mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
 
-					std::cout << "Enemy " << it.ID << " new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
+					//std::cout << "Enemy " << it.ID << " new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 				}
 			}
 		}
