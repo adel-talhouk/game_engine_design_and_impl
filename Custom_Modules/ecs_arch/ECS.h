@@ -27,6 +27,7 @@ struct SpriteComponent
 	~SpriteComponent() { pSprite = nullptr; };
 
 	Sprite* pSprite;
+	Ref<Texture> mTextureRef;
 	Color mColour;
 };
 
@@ -117,7 +118,7 @@ protected:
 	/*static */std::vector<Entity> mEntitiesVector;
 
 	//Components
-	Ref<Texture> mTextureRef;
+	//Ref<Texture> mTextureRef;
 	std::map<int, SpriteComponent> mSpriteComponents;
 	std::map<int, HealthComponent> mHealthComponents;
 	std::map<int, Position2DComponent> mPosition2DComponents;

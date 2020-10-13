@@ -106,7 +106,7 @@ void EcsNode::_ready()
 		{
 			//Sprite component
 			SpriteComponent spriteComponent((Sprite*)get_child(i));
-			mTextureRef = spriteComponent.pSprite->get_texture();
+			spriteComponent.mTextureRef = spriteComponent.pSprite->get_texture();
 			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
 			//Health component
@@ -129,7 +129,7 @@ void EcsNode::_ready()
 		{
 			//Sprite component
 			SpriteComponent spriteComponent((Sprite*)get_child(i));
-			mTextureRef = spriteComponent.pSprite->get_texture();
+			spriteComponent.mTextureRef = spriteComponent.pSprite->get_texture();
 			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
 			//Health component
@@ -250,16 +250,16 @@ void EcsNode::_draw()
 {
 	std::cout << "Inside _draw().\n";
 
-	for (auto& it : mEntitiesVector)
-	{
-		//Find all the entities with the sprite component
-		if (mSpriteComponents.find(it.ID) != mSpriteComponents.end())
-		{
-			Sprite* pSprite = mSpriteComponents.find(it.ID)->second.pSprite;
+	//for (auto& it : mEntitiesVector)
+	//{
+	//	//Find all the entities with the sprite component
+	//	if (mSpriteComponents.find(it.ID) != mSpriteComponents.end())
+	//	{
+	//		Sprite* pSprite = mSpriteComponents.find(it.ID)->second.pSprite;
 
-			pSprite->_notification(NOTIFICATION_DRAW);
-		}
-	}
+	//		pSprite->_notification(NOTIFICATION_DRAW);
+	//	}
+	//}
 
 	//draw_line(Vector2(0, 0), Vector2(50, 50), Color(255, 0, 0), 1);
 	//Vector2 pos = get_global_position();
