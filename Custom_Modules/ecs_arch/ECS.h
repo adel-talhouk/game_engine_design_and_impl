@@ -80,31 +80,6 @@ struct CombatComponent
 	float mRange;
 };
 
-//----------------------------------------------------------------------- Systems
-//class System
-//{
-//public:
-//	System() {};
-//	virtual ~System() {};
-//	virtual void updateSystem() = 0;
-//};
-//
-//class MovementSystem : public System
-//{
-//public:
-//	MovementSystem();
-//	~MovementSystem() {};
-//	void updateSystem();
-//};
-//
-//class CombatSystem : public System
-//{
-//public:
-//	CombatSystem();
-//	~CombatSystem() {};
-//	void updateSystem();
-//};
-
 //----------------------------------------------------------------------- GoDot class
 
 //Entity Node in GoDot
@@ -127,7 +102,12 @@ protected:
 	std::map<int, CombatComponent> mCombatComponents;
 
 	//Systems
-	//std::vector<System*> mSystemsVector;
+	/*
+		Got rid of all the systems and the vecto of system pointers, because I would have needed access to the component
+		vectors, and it was a big hassle. Instead of calling a virtual updateSystem() method on each system in the vector
+		(they were derived from a System class with a pure virtual updateSystem() method), I take care of the input and logic
+		int _update() in this class.
+	*/
 
 public:
 

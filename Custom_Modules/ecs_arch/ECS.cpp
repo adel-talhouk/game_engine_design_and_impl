@@ -2,55 +2,6 @@
 #include "scene/2d/sprite.h"
 #include <iostream>
 
-//----------------------------------------------------------------------- Systems
-
-//MovementSystem::MovementSystem()
-//	:System()
-//{
-	////Player input
-	//if (Input::get_singleton()->is_key_pressed(KEY_W)) 
-	//{
-	//	for (auto& it : EcsNode::getEntitiesVector())
-	//	{
-	//		//Find all the entities with the movement components and input components
-	//		if (mMovementComponents.find(it.ID) != godotComponents.end())
-	//		{
-	//			godotComponent gd = godotComponents.find(it.ID)->second;
-	//			gd.s->set_modulate(gd.c);
-	//		}
-	//	}
-	//}
-	//if (Input::get_singleton()->is_key_pressed(KEY_S))
-	//{
-	//	for (auto& it : entities)
-	//	{
-	//		if (godotComponents.find(it.ID) != godotComponents.end())
-	//		{
-	//			godotComponent gd = godotComponents.find(it.ID)->second;
-	//			gd.s->set_modulate(Color(1, 1, 1, 1));
-	//		}
-	//	}
-	//}
-
-	////Enemy constant move
-
-//}
-
-//void MovementSystem::updateSystem()
-//{
-//	std::cout << "MovementSystem::updateSystem().\n";
-//}
-//
-//CombatSystem::CombatSystem()
-//	:System()
-//{
-//}
-//
-//void CombatSystem::updateSystem()
-//{
-//	std::cout << "CombatSystem::updateSystem().\n";
-//}
-
 //----------------------------------------------------------------------- GoDot class
 
 EcsNode::EcsNode()
@@ -63,14 +14,9 @@ EcsNode::~EcsNode()
 	//Safety check
 	//if (!mbIsDeleted)
 	//{
-	//	//Clear the systems vector
-	//	for (auto it : mSystemsVector)
-	//	{
-	//		delete it;
-	//		it = nullptr;
-	//	}
-	//	mSystemsVector.clear();
-
+	//
+	//	Delete stuff here
+	//
 	//	mbIsDeleted = true;
 	//}
 }
@@ -83,12 +29,6 @@ void EcsNode::_bind_methods()
 
 void EcsNode::_ready()
 {
-	//Create the new systems and add them to the systems vector
-	//MovementSystem* pMovementSystem = new MovementSystem();
-	//mSystemsVector.push_back(pMovementSystem);
-	//CombatSystem* pCombatSystem = new CombatSystem();
-	//mSystemsVector.push_back(pCombatSystem);
-
 	//See how many children this node has
 	int64_t childCount = get_child_count();
 	mEntitiesVector.resize(childCount);
@@ -151,12 +91,6 @@ void EcsNode::_ready()
 
 void EcsNode::_update()
 {
-	////Update the systems
-	//for (auto it : mSystemsVector)
-	//{
-	//	it->updateSystem();
-	//}
-
 	//W Key		https://docs.godotengine.org/en/stable/classes/class_inputeventkey.html#class-inputeventkey, https://docs.godotengine.org/en/stable/classes/class_@globalscope.html#enum-globalscope-keylist
 	if (Input::get_singleton()->is_key_pressed(KEY_W))
 	{
@@ -273,7 +207,7 @@ void EcsNode::_draw()
 		{
 			Sprite* pSprite = mSpriteComponents.find(it.ID)->second.pSprite;
 
-			//Get hte position2D components
+			//Get the position2D components
 			if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
 			{
 				Point2 drawPos = mPosition2DComponents.find(it.ID)->second.mPosition;
