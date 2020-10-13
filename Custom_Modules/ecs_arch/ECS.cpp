@@ -1,11 +1,14 @@
 #include "ECS.h"
 #include "scene/2d/sprite.h"
+#include <core/engine.h>
+
 #include <iostream>
 
 //----------------------------------------------------------------------- GoDot class
 
 EcsNode::EcsNode()
 {
+	//Make it process automatically
 	set_process(true);
 }
 
@@ -29,163 +32,171 @@ void EcsNode::_bind_methods()
 
 void EcsNode::_ready()
 {
-	//See how many children this node has
-	int64_t childCount = get_child_count();
-	mEntitiesVector.resize(childCount);
-
-	//Iterate through the children
-	for (int64_t i = 0; i < childCount; i++) 
+	//Do not let it run in the editor
+	if (!Engine::get_singleton()->is_editor_hint())
 	{
-		//Make an entity, give it an ID, and add it to the vector
-		Entity entity;
-		entity.ID = i;
-		mEntitiesVector.push_back(entity);
-		
-		//If it's the PlayerNode
-		if (get_child(i)->get_name() == "PlayerNode")
+		//See how many children this node has
+		int64_t childCount = get_child_count();
+		mEntitiesVector.resize(childCount);
+
+		//Iterate through the children
+		for (int64_t i = 0; i < childCount; i++)
 		{
-			//Sprite component
-			Sprite* pSprite = (Sprite*)get_child(i);
-			SpriteComponent spriteComponent(pSprite->get_texture());
-			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
+			//Make an entity, give it an ID, and add it to the vector
+			Entity entity;
+			entity.ID = i;
+			mEntitiesVector.push_back(entity);
 
-			//Health component
-			HealthComponent health(50);
-			mHealthComponents.emplace(std::make_pair(entity.ID, health));
+			//If it's the PlayerNode
+			if (get_child(i)->get_name() == "PlayerNode")
+			{
+				//Sprite component
+				Sprite* pSprite = (Sprite*)get_child(i);
+				SpriteComponent spriteComponent(pSprite->get_texture());
+				mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
-			//Position component
-			Position2DComponent pos(get_global_position());
-			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
+				//Health component
+				HealthComponent health(50);
+				mHealthComponents.emplace(std::make_pair(entity.ID, health));
 
-			//Movement component
-			MovementComponent movement(10.0f, 10.0f, 10.0f, 0.0f, get_viewport_rect().get_size().y - 100, true);
-			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
+				//Position component
+				Position2DComponent pos(get_global_position());
+				mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
-			//Combat component
-			CombatComponent combat(10, 50);
-			mCombatComponents.emplace(std::make_pair(entity.ID, combat));
-		}
-		else    //Otherwise (enemy)
-		{
-			//Sprite component
-			Sprite* pSprite = (Sprite*)get_child(i);
-			SpriteComponent spriteComponent(pSprite->get_texture());
-			mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
+				//Movement component
+				MovementComponent movement(10.0f, 10.0f, 10.0f, 0.0f, get_viewport_rect().get_size().y - 100, true);
+				mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 
-			//Health component
-			HealthComponent health(10);
-			mHealthComponents.emplace(std::make_pair(entity.ID, health));
+				//Combat component
+				CombatComponent combat(10, 50);
+				mCombatComponents.emplace(std::make_pair(entity.ID, combat));
+			}
+			else    //Otherwise (enemy)
+			{
+				//Sprite component
+				Sprite* pSprite = (Sprite*)get_child(i);
+				SpriteComponent spriteComponent(pSprite->get_texture());
+				mSpriteComponents.emplace(std::make_pair(entity.ID, spriteComponent));
 
-			//Position component
-			Position2DComponent pos(get_global_position());
-			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
+				//Health component
+				HealthComponent health(10);
+				mHealthComponents.emplace(std::make_pair(entity.ID, health));
 
-			//Movement component
-			MovementComponent movement(7.5f, 10.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
-			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
+				//Position component
+				Position2DComponent pos(get_global_position());
+				mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
+
+				//Movement component
+				MovementComponent movement(7.5f, 10.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
+				mMovementComponents.emplace(std::make_pair(entity.ID, movement));
+			}
 		}
 	}
 }
 
 void EcsNode::_update()
 {
-	//W Key		https://docs.godotengine.org/en/stable/classes/class_@globalscope.html#enum-globalscope-keylist
-	if (Input::get_singleton()->is_key_pressed(KEY_W))
+	//Do not let it run in the editor
+	if (!Engine::get_singleton()->is_editor_hint())
 	{
+		//W Key		https://docs.godotengine.org/en/stable/classes/class_@globalscope.html#enum-globalscope-keylist
+		if (Input::get_singleton()->is_key_pressed(KEY_W))
+		{
+			for (auto& it : mEntitiesVector)
+			{
+				//Find all the entities with the movement components and pposition2d components
+				if (mMovementComponents.find(it.ID) != mMovementComponents.end())
+				{
+					MovementComponent movementComponent = mMovementComponents.find(it.ID)->second;
+
+					//As long as this is the player
+					if (movementComponent.mbIsPlayer)
+					{
+						if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
+						{
+							Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
+							float newPosY = position2DComponent.mPosition.y - movementComponent.mMoveSpeed;
+
+							//Check the bounds
+							if (newPosY < movementComponent.mMinPosY)
+								newPosY = movementComponent.mMinPosY;
+
+							//Clamp x pos
+							if (position2DComponent.mPosition.x > movementComponent.mMaxPosX)
+								position2DComponent.mPosition.x = movementComponent.mMaxPosX;
+							if (position2DComponent.mPosition.x < movementComponent.mMinPosX)
+								position2DComponent.mPosition.x = movementComponent.mMinPosX;
+
+							//Update the position
+							Point2 newPosition(position2DComponent.mPosition.x, newPosY);
+							mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
+						}
+					}
+				}
+			}
+		}
+
+		//S Key
+		if (Input::get_singleton()->is_key_pressed(KEY_S))
+		{
+			for (auto& it : mEntitiesVector)
+			{
+				//Find all the entities with the movement components and pposition2d components
+				if (mMovementComponents.find(it.ID) != mMovementComponents.end())
+				{
+					MovementComponent movementComponent = mMovementComponents.find(it.ID)->second;
+
+					//As long as this is the player
+					if (movementComponent.mbIsPlayer)
+					{
+						if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
+						{
+							Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
+							float newPosY = position2DComponent.mPosition.y + movementComponent.mMoveSpeed;
+
+							//Check the bounds
+							if (newPosY > movementComponent.mMaxPosY)
+								newPosY = movementComponent.mMaxPosY;
+
+							//Clamp x pos
+							if (position2DComponent.mPosition.x > movementComponent.mMaxPosX)
+								position2DComponent.mPosition.x = movementComponent.mMaxPosX;
+							if (position2DComponent.mPosition.x < movementComponent.mMinPosX)
+								position2DComponent.mPosition.x = movementComponent.mMinPosX;
+
+							//Update the position
+							Point2 newPosition(position2DComponent.mPosition.x, newPosY);
+							mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
+						}
+					}
+				}
+			}
+		}
+
+		//Enemy constant move
 		for (auto& it : mEntitiesVector)
 		{
 			//Find all the entities with the movement components and pposition2d components
 			if (mMovementComponents.find(it.ID) != mMovementComponents.end())
 			{
 				MovementComponent movementComponent = mMovementComponents.find(it.ID)->second;
-				
-				//As long as this is the player
-				if (movementComponent.mbIsPlayer)
+
+				//As long as it's not a player
+				if (!movementComponent.mbIsPlayer)
 				{
 					if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
 					{
 						Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
-						float newPosY = position2DComponent.mPosition.y - movementComponent.mMoveSpeed;
+						float newPosX = position2DComponent.mPosition.x - movementComponent.mMoveSpeed;
 
 						//Check the bounds
-						if (newPosY < movementComponent.mMinPosY)
-							newPosY = movementComponent.mMinPosY;
-
-						//Clamp x pos
-						if (position2DComponent.mPosition.x > movementComponent.mMaxPosX)
-							position2DComponent.mPosition.x = movementComponent.mMaxPosX;
-						if (position2DComponent.mPosition.x < movementComponent.mMinPosX)
-							position2DComponent.mPosition.x = movementComponent.mMinPosX;
+						if (newPosX < movementComponent.mMinPosX)
+							newPosX = movementComponent.mMaxPosX;
 
 						//Update the position
-						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
+						Point2 newPosition(newPosX, position2DComponent.mPosition.y);
 						mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
 					}
-				}
-			}
-		}
-	}
-
-	//S Key
-	if (Input::get_singleton()->is_key_pressed(KEY_S))
-	{
-		for (auto& it : mEntitiesVector)
-		{
-			//Find all the entities with the movement components and pposition2d components
-			if (mMovementComponents.find(it.ID) != mMovementComponents.end())
-			{
-				MovementComponent movementComponent = mMovementComponents.find(it.ID)->second;
-
-				//As long as this is the player
-				if (movementComponent.mbIsPlayer)
-				{
-					if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
-					{
-						Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
-						float newPosY = position2DComponent.mPosition.y + movementComponent.mMoveSpeed;
-
-						//Check the bounds
-						if (newPosY > movementComponent.mMaxPosY)
-							newPosY = movementComponent.mMaxPosY;
-
-						//Clamp x pos
-						if (position2DComponent.mPosition.x > movementComponent.mMaxPosX)
-							position2DComponent.mPosition.x = movementComponent.mMaxPosX;
-						if (position2DComponent.mPosition.x < movementComponent.mMinPosX)
-							position2DComponent.mPosition.x = movementComponent.mMinPosX;
-
-						//Update the position
-						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
-						mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
-					}
-				}
-			}
-		}
-	}
-
-	//Enemy constant move
-	for (auto& it : mEntitiesVector)
-	{
-		//Find all the entities with the movement components and pposition2d components
-		if (mMovementComponents.find(it.ID) != mMovementComponents.end())
-		{
-			MovementComponent movementComponent = mMovementComponents.find(it.ID)->second;
-
-			//As long as it's not a player
-			if (!movementComponent.mbIsPlayer)
-			{
-				if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
-				{
-					Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
-					float newPosX = position2DComponent.mPosition.x - movementComponent.mMoveSpeed;
-
-					//Check the bounds
-					if (newPosX < movementComponent.mMinPosX)
-						newPosX = movementComponent.mMaxPosX;
-
-					//Update the position
-					Point2 newPosition(newPosX, position2DComponent.mPosition.y);
-					mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
 				}
 			}
 		}
@@ -194,20 +205,24 @@ void EcsNode::_update()
 
 void EcsNode::_draw()
 {
-	for (auto& it : mEntitiesVector)
+	//Do not let it run in the editor
+	if (!Engine::get_singleton()->is_editor_hint())
 	{
-		//Find all the entities with the sprite component
-		if (mSpriteComponents.find(it.ID) != mSpriteComponents.end())
+		for (auto& it : mEntitiesVector)
 		{
-			Ref<Texture> textureRef = mSpriteComponents.find(it.ID)->second.mTextureRef;
-
-			//Get the position2D components
-			if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
+			//Find all the entities with the sprite component
+			if (mSpriteComponents.find(it.ID) != mSpriteComponents.end())
 			{
-				Point2 drawPos = mPosition2DComponents.find(it.ID)->second.mPosition;
+				Ref<Texture> textureRef = mSpriteComponents.find(it.ID)->second.mTextureRef;
 
-				//Draw
-				draw_texture(textureRef, drawPos);
+				//Get the position2D components
+				if (mPosition2DComponents.find(it.ID) != mPosition2DComponents.end())
+				{
+					Point2 drawPos = mPosition2DComponents.find(it.ID)->second.mPosition;
+
+					//Draw
+					draw_texture(textureRef, drawPos);
+				}
 			}
 		}
 	}
