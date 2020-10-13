@@ -119,7 +119,7 @@ void EcsNode::_ready()
 			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 			//Movement component
-			MovementComponent movement(10.0f, 0.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y, true);
+			MovementComponent movement(10.0f, 10.0f, 10.0f, 0.0f, get_viewport_rect().get_size().y, true);
 			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 
 			//Combat component
@@ -143,7 +143,7 @@ void EcsNode::_ready()
 			mPosition2DComponents.emplace(std::make_pair(entity.ID, pos));
 
 			//Movement component
-			MovementComponent movement(7.5f, 0.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
+			MovementComponent movement(7.5f, 10.0f, get_viewport_rect().get_size().x, 0.0f, get_viewport_rect().get_size().y);
 			mMovementComponents.emplace(std::make_pair(entity.ID, movement));
 		}
 	}
@@ -182,6 +182,8 @@ void EcsNode::_update()
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
 						position2DComponent.mPosition = newPosition;
+
+						std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 					}
 				}
 			}
@@ -213,6 +215,7 @@ void EcsNode::_update()
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
 						position2DComponent.mPosition = newPosition;
+						std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 					}
 				}
 			}
@@ -242,6 +245,8 @@ void EcsNode::_update()
 					//Update the position
 					Point2 newPosition(newPosX, position2DComponent.mPosition.y);
 					position2DComponent.mPosition = newPosition;
+
+					//std::cout << "Enemy " << it.ID << " new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 				}
 			}
 		}
@@ -250,8 +255,6 @@ void EcsNode::_update()
 
 void EcsNode::_draw()
 {
-	std::cout << "Inside _draw().\n";
-
 	for (auto& it : mEntitiesVector)
 	{
 		//Find all the entities with the sprite component
@@ -266,6 +269,9 @@ void EcsNode::_draw()
 
 				//Draw
 				//pSprite->_notification(NOTIFICATION_DRAW);
+				//pSprite->set_modulate(mSpriteComponents.find(it.ID)->second.mColour);
+				//pSprite->set_frame_coords(drawPos);
+				//std::cout << "Entity " << it.ID << " has SpriteComponent and Position2DComponent. Pos: " << drawPos.x << ", " << drawPos.y << std::endl;
 			}
 		}
 	}
@@ -326,6 +332,6 @@ void EcsNode::setEntityPosition(int ID, Point2 pos)
 	{
 		//Set the position
 		it->second.mPosition = pos;
-		std::cout << "New position: " << pos.x << ", " << pos.y << ".\n";
+		//std::cout << "New position: " << pos.x << ", " << pos.y << ".\n";
 	}
 }
