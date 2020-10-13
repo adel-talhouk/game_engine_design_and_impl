@@ -205,8 +205,9 @@ void EcsNode::_update()
 						//If it is 0
 						if (enemyHealthComponent.mCurrentHealth <= 0)
 						{
-							//Reset their position
-							Point2 newPosition(enemyMovementComponent.mMaxPosX, enemyPosition2DComponent.mPosition.y);	//Give it a new random Y pos
+							//Reset their position (random Y)
+							float randomRespawnPosY = rand() % (int)enemyMovementComponent.mMaxPosY - ((int)enemyMovementComponent.mMinPosY + 100);
+							Point2 newPosition(enemyMovementComponent.mMaxPosX, randomRespawnPosY);
 							mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
 							std::cout << "Enemy killed.\n";
 						}
