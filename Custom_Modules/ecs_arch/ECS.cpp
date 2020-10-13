@@ -78,7 +78,7 @@ EcsNode::~EcsNode()
 
 void EcsNode::_bind_methods()
 {
-	ClassDB::bind_method(D_METHOD("setEntityPosition", "ID", "pos"), &EcsNode::setEntityPosition);
+	//ClassDB::bind_method(D_METHOD("setEntityPosition", "ID", "pos"), &EcsNode::setEntityPosition);
 }
 
 void EcsNode::_ready()
@@ -175,6 +175,8 @@ void EcsNode::_update()
 						Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
 						float newPosY = position2DComponent.mPosition.y - movementComponent.mMoveSpeed;
 
+						std::cout << "Entity ID: " << it.ID << ", Old pos y: " << position2DComponent.mPosition.y << ", New pos y: " << newPosY << ".\n";
+
 						//Check the bounds
 						if (newPosY < movementComponent.mMinPosY)
 							newPosY = movementComponent.mMinPosY;
@@ -189,7 +191,7 @@ void EcsNode::_update()
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
 						position2DComponent.mPosition = newPosition;
 
-						std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
+						//std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 					}
 				}
 			}
@@ -214,6 +216,8 @@ void EcsNode::_update()
 						Position2DComponent position2DComponent = mPosition2DComponents.find(it.ID)->second;
 						float newPosY = position2DComponent.mPosition.y + movementComponent.mMoveSpeed;
 
+						std::cout << "Entity ID: " << it.ID << ", Old pos y: " << position2DComponent.mPosition.y << ", New pos y: " << newPosY << ".\n";
+
 						//Check the bounds
 						if (newPosY > movementComponent.mMaxPosY)
 							newPosY = movementComponent.mMaxPosY;
@@ -227,7 +231,7 @@ void EcsNode::_update()
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
 						position2DComponent.mPosition = newPosition;
-						std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
+						//std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 					}
 				}
 			}
@@ -334,16 +338,16 @@ void EcsNode::_notification(int p_what)
 	}
 }
 
-void EcsNode::setEntityPosition(int ID, Point2 pos)
-{
-	//Get the Position2DComponent
-	std::map<int, Position2DComponent>::iterator it;
-	it = mPosition2DComponents.find(ID);
-
-	if (it != mPosition2DComponents.end())
-	{
-		//Set the position
-		it->second.mPosition = pos;
-		//std::cout << "New position: " << pos.x << ", " << pos.y << ".\n";
-	}
-}
+//void EcsNode::setEntityPosition(int ID, Point2 pos)
+//{
+//	//Get the Position2DComponent
+//	std::map<int, Position2DComponent>::iterator it;
+//	it = mPosition2DComponents.find(ID);
+//
+//	if (it != mPosition2DComponents.end())
+//	{
+//		//Set the position
+//		it->second.mPosition = pos;
+//		//std::cout << "New position: " << pos.x << ", " << pos.y << ".\n";
+//	}
+//}

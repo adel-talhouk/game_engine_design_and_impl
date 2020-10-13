@@ -143,7 +143,7 @@ public:
 	//static std::vector<Entity>& getEntitiesVector() { return mEntitiesVector; };
 
 	//Methods in GdScript
-	void setEntityPosition(int ID, Point2 pos);
+	//void setEntityPosition(int ID, Point2 pos);
 };
 
 
