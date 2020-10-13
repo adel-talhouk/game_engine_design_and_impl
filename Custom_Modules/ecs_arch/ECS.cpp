@@ -171,6 +171,45 @@ void EcsNode::_update()
 			}
 		}
 
+		//Space key
+		if (Input::get_singleton()->is_key_pressed(KEY_SPACE))
+		{
+			//Player ID and distance vector
+			int playerID = 0;
+			Point2 distance;
+
+			//Get the combat component
+			Position2DComponent playerPosition2DComponent = mPosition2DComponents.find(playerID)->second;
+			CombatComponent playerCombatComponent = mCombatComponents.find(playerID)->second;
+
+			//Go through the rest of the entities
+			for (auto& it : mEntitiesVector)
+			{
+				//Components
+				Position2DComponent enemyPosition2DComponent = mPosition2DComponents.find(it.ID)->second;
+				MovementComponent enemyMovementComponent = mMovementComponents.find(it.ID)->second;
+				HealthComponent enemyHealthComponent = mHealthComponents.find(it.ID)->second;
+
+				//Calculate the distance
+				distance = enemyPosition2DComponent.mPosition - playerPosition2DComponent.mPosition;
+
+				//Check if it's less than the range
+				if (distance.length <= playerCombatComponent.mRange)
+				{
+					//Inflict damage to the enemy
+					enemyHealthComponent.mCurrentHealth -= playerCombatComponent.mDamageValue;
+
+					//If it is 0
+					if (enemyHealthComponent.mCurrentHealth <= 0)
+					{
+						//Reset their position
+						Point2 newPosition(enemyMovementComponent.mMaxPosX, enemyPosition2DComponent.mPosition.y);
+						mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
+					}
+				}
+			}
+		}
+
 		//Enemy constant move
 		for (auto& it : mEntitiesVector)
 		{
