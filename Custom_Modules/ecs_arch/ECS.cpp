@@ -189,8 +189,8 @@ void EcsNode::_update()
 
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
-						position2DComponent.mPosition = newPosition;
-
+						//position2DComponent.mPosition = newPosition;
+						mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
 						//std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 					}
 				}
@@ -230,7 +230,7 @@ void EcsNode::_update()
 
 						//Update the position
 						Point2 newPosition(position2DComponent.mPosition.x, newPosY);
-						position2DComponent.mPosition = newPosition;
+						mPosition2DComponents.find(it.ID)->second.mPosition = newPosition;
 						//std::cout << "Player new Pos: " << position2DComponent.mPosition.x << ", " << position2DComponent.mPosition.y << ".\n";
 					}
 				}
