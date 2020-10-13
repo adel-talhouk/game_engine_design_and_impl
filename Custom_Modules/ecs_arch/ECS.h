@@ -55,16 +55,18 @@ struct Position2DComponent
 struct MovementComponent
 {
 	//Constructor(s) and Destructor
-	MovementComponent(float moveSpeed, float minPosX, float maxPosX, float minPosY, float maxPosY)
+	MovementComponent(float moveSpeed, float minPosX, float maxPosX, float minPosY, float maxPosY, bool isPlayer = false)
 		:mMoveSpeed(moveSpeed), mMinPosX(minPosX), mMaxPosX(maxPosX)
-		, mMinPosY(minPosY), mMaxPosY(maxPosY) {};
+		, mMinPosY(minPosY), mMaxPosY(maxPosY), mbIsPlayer(isPlayer) {};
 	~MovementComponent() {};
+	const bool getIsPlayer() const { return mbIsPlayer; };
 
 	float mMoveSpeed;
 	float mMinPosX;
 	float mMaxPosX;
 	float mMinPosY;
 	float mMaxPosY;
+	bool mbIsPlayer;
 };
 
 //Projectile
@@ -113,7 +115,7 @@ class EcsNode : public Node2D
 
 protected:
 	static void _bind_methods();
-	std::vector<Entity> mEntitiesVector;
+	/*static */std::vector<Entity> mEntitiesVector;
 
 	//Components
 	std::map<int, SpriteComponent> mSpriteComponents;
@@ -126,14 +128,20 @@ protected:
 	std::vector<System*> mSystemsVector;
 
 public:
+
+	//Constructor(s) and Destructor
 	EcsNode();
 	~EcsNode();
+
+	//Overridden methods
 	void _ready();
 	void _update();
 	void _draw();
 	void _notification(int p_what);
-	//void _input(Variant event);
 
+	//static std::vector<Entity>& getEntitiesVector() { return mEntitiesVector; };
+
+	//Methods in GdScript
 	void setEntityPosition(int ID, Point2 pos);
 };
 
