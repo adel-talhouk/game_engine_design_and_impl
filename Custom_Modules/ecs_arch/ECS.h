@@ -87,6 +87,12 @@ class EcsNode : public Node2D
 {
 	GDCLASS(EcsNode, Node2D);
 
+	//Game start
+	bool mbGameStart = false;
+
+	//Game end
+	bool mbGameEnd = false;
+
 protected:
 	static void _bind_methods();
 	

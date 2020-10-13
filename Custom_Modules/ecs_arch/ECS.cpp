@@ -94,8 +94,19 @@ void EcsNode::_ready()
 
 void EcsNode::_update()
 {
-	//Do not let it run in the editor
-	if (!Engine::get_singleton()->is_editor_hint())
+	//Start the game	(make sure this does not happen in the editor)
+	if (!Engine::get_singleton()->is_editor_hint() && !mbGameStart)
+	{
+		//If they press space
+		if (Input::get_singleton()->is_key_pressed(KEY_SPACE))
+		{
+			//They can start the game
+			mbGameStart = true;
+		}
+	}
+
+	//If the game started, and still did not end
+	if (mbGameStart && !mbGameEnd)
 	{
 		//W Key		https://docs.godotengine.org/en/stable/classes/class_@globalscope.html#enum-globalscope-keylist
 		if (Input::get_singleton()->is_key_pressed(KEY_W))
@@ -234,7 +245,13 @@ void EcsNode::_update()
 
 						//Check the bounds
 						if (newPosX < movementComponent.mMinPosX)
+						{
 							newPosX = movementComponent.mMaxPosX;
+
+							//Loss state
+							//get_tree().quit();	//Not working
+							mbGameEnd = true;
+						}
 
 						//Update the position
 						Point2 newPosition(newPosX, position2DComponent.mPosition.y);
