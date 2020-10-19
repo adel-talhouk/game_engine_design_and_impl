@@ -1,5 +1,4 @@
 #include "Subdivision.h"
-#include "scene/2d/sprite.h"
 #include <core/engine.h>
 
 #include <iostream>
@@ -11,9 +10,6 @@ SubdivisionNode::SubdivisionNode()
 {
 	//Make it process automatically
 	set_process(true);
-
-	//Seed rand
-	srand(time(0));
 }
 
 SubdivisionNode::~SubdivisionNode()
@@ -32,6 +28,10 @@ void SubdivisionNode::_ready()
 	//Do not let it run in the editor
 	if (!Engine::get_singleton()->is_editor_hint())
 	{
+		//Get the mesh
+
+
+		//Set the original values
 
 	}
 }
@@ -44,12 +44,32 @@ void SubdivisionNode::_update()
 		//W Key
 		if (Input::get_singleton()->is_key_pressed(KEY_W))
 		{
+			//Update the number of subdivisions
+
+
+			//If the number of subdivisions is greater than 1
+
+
+				//Convert the mesh into a alf-edge mesh
+
+
+				//Subdivide the new mesh
+
+
+				//Set the new values
+
+
+				//Redraw it
 
 		}
 
 		//S Key
 		if (Input::get_singleton()->is_key_pressed(KEY_S))
 		{
+			//Update the number of subdivisions
+
+
+			//How do I undo a subdivision?
 
 		}
 	}
@@ -60,7 +80,12 @@ void SubdivisionNode::_draw()
 	//Do not let it run in the editor
 	if (!Engine::get_singleton()->is_editor_hint())
 	{
+		//If it should redraw
+		if (mbShouldRedraw)
+		{
+			//Draw here
 
+		}
 	}
 }
 
