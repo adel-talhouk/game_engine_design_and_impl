@@ -12,6 +12,7 @@ SubdivisionNode::SubdivisionNode()
 	set_process(true);
 
 	mNumOfSubdivisions = 0;
+	mbShouldRecalculate = false;
 	mbShouldRedraw = true;
 }
 
@@ -73,16 +74,89 @@ void SubdivisionNode::_update()
 	//Start the game	(make sure this does not happen in the editor)
 	if (!Engine::get_singleton()->is_editor_hint())
 	{
-		//W Key
-		if (Input::get_singleton()->is_key_pressed(KEY_W))
+		//1 subdivision
+		if (Input::get_singleton()->is_key_pressed(KEY_1))
 		{
-			//Update the number of subdivisions
+			//The old number of subdivisions
+			int oldNumOfSubdivisions = mNumOfSubdivisions;
 
+			//If it's new
+			if (mNumOfSubdivisions != oldNumOfSubdivisions)
+			{
+				//Update it
+				mNumOfSubdivisions = 1;
+				mbShouldRecalculate = true;
+			}
 
+		}
+
+		//2 subdivisions
+		if (Input::get_singleton()->is_key_pressed(KEY_2))
+		{
+			//The old number of subdivisions
+			int oldNumOfSubdivisions = mNumOfSubdivisions;
+
+			//If it's new
+			if (mNumOfSubdivisions != oldNumOfSubdivisions)
+			{
+				//Update it
+				mNumOfSubdivisions = 2;
+				mbShouldRecalculate = true;
+			}
+		}
+
+		//3 subdivisions
+		if (Input::get_singleton()->is_key_pressed(KEY_3))
+		{
+			//The old number of subdivisions
+			int oldNumOfSubdivisions = mNumOfSubdivisions;
+
+			//If it's new
+			if (mNumOfSubdivisions != oldNumOfSubdivisions)
+			{
+				//Update it
+				mNumOfSubdivisions = 3;
+				mbShouldRecalculate = true;
+			}
+		}
+
+		//4 subdivisions
+		if (Input::get_singleton()->is_key_pressed(KEY_4))
+		{
+			//The old number of subdivisions
+			int oldNumOfSubdivisions = mNumOfSubdivisions;
+
+			//If it's new
+			if (mNumOfSubdivisions != oldNumOfSubdivisions)
+			{
+				//Update it
+				mNumOfSubdivisions = 4;
+				mbShouldRecalculate = true;
+			}
+		}
+
+		//5 subdivisions
+		if (Input::get_singleton()->is_key_pressed(KEY_5))
+		{
+			//The old number of subdivisions
+			int oldNumOfSubdivisions = mNumOfSubdivisions;
+
+			//If it's new
+			if (mNumOfSubdivisions != oldNumOfSubdivisions)
+			{
+				//Update it
+				mNumOfSubdivisions = 5;
+				mbShouldRecalculate = true;
+			}
+		}
+
+		//If it should recalculate
+		if (mbShouldRecalculate)
+		{
 			//If the number of subdivisions is greater than 1
 
 
-				//Convert the mesh into a alf-edge mesh
+				//Convert the mesh into a half-edge mesh
 
 
 				//Subdivide the new mesh
@@ -92,16 +166,6 @@ void SubdivisionNode::_update()
 
 
 				//Redraw it
-
-		}
-
-		//S Key
-		if (Input::get_singleton()->is_key_pressed(KEY_S))
-		{
-			//Update the number of subdivisions
-
-
-			//How do I undo a subdivision?
 
 		}
 	}

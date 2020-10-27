@@ -17,6 +17,7 @@ class SubdivisionNode : public MeshInstance2D
 	//Data
 	int mNumOfSubdivisions = 0;
 	int mNumOfTriangles;
+	bool mbShouldRecalculate;
 	bool mbShouldRedraw;
 
 	//Original values
