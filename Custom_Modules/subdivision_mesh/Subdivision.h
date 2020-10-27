@@ -21,11 +21,11 @@ class SubdivisionNode : public MeshInstance2D
 
 	//Original values
 	PoolVector2Array mOriginalVertices;
-	PoolColorArray mOriginalCoulors;
+	PoolColorArray mOriginalColours;
 
 	//Updated values
 	PoolVector2Array mNewVertices;
-	PoolColorArray mNewCoulors;
+	PoolColorArray mNewColours;
 
 protected:
 
