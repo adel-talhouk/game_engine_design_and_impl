@@ -28,6 +28,11 @@ class SubdivisionNode : public MeshInstance2D
 	PoolVector2Array mNewVertices;
 	PoolColorArray mNewColours;
 
+	//Methods
+	void convertToHalfEdgeMesh();
+	void subdivideMesh(int numOfSubdivisions);
+	void revertMesh();
+
 protected:
 
 	static void _bind_methods();

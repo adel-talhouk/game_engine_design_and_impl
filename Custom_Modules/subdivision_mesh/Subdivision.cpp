@@ -153,20 +153,23 @@ void SubdivisionNode::_update()
 		//If it should recalculate
 		if (mbShouldRecalculate)
 		{
-			//If the number of subdivisions is greater than 1
+			//Convert to a half-edge mesh
+			convertToHalfEdgeMesh();
+
+			//Subdivide it mNumOfsubdivisions times
+			subdivideMesh(mNumOfSubdivisions);
+
+			//Convert it back to a normal mesh
+			revertMesh();
+
+			//Update the mNewVertices and mNewColours
 
 
-				//Convert the mesh into a half-edge mesh
+			//Redraw it
+			mbShouldRedraw = true;
 
-
-				//Subdivide the new mesh
-
-
-				//Set the new values
-
-
-				//Redraw it
-
+			//Do not recalculate
+			mbShouldRecalculate = false;
 		}
 	}
 }
@@ -181,6 +184,8 @@ void SubdivisionNode::_draw()
 		{
 			//Draw here
 
+			//Do not redraw
+			mbShouldRedraw = false;
 		}
 	}
 }
@@ -207,4 +212,22 @@ void SubdivisionNode::_notification(int p_what)
 	}
 
 	}
+}
+
+void SubdivisionNode::convertToHalfEdgeMesh()
+{
+	//https://www.flipcode.com/archives/The_Half-Edge_Data_Structure.shtml
+}
+
+void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
+{
+	/*
+		LOOP SCHEME FOR TRIANGLE SUBDIVISION, NOT CATMULL-CLARK, AS THE LATTER MAKES QUADS, AND WE WOULD HAVE TO CONVERT AT THE END. 
+		THE FORMER WORKS WITH TRIANGLES.
+	*/
+}
+
+void SubdivisionNode::revertMesh()
+{
+
 }
