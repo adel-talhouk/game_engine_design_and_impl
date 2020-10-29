@@ -228,9 +228,13 @@ void SubdivisionNode::_notification(int p_what)
 	}
 }
 
+//https://www.flipcode.com/archives/The_Half-Edge_Data_Structure.shtml
+//https://github.com/haldean/meshparse
+//https://github.com/haldean/meshparse/blob/master/src/objparse.h
+//https://github.com/haldean/meshparse/blob/master/src/objparse.cpp
 void SubdivisionNode::convertToHalfEdgeMesh()
 {
-	//https://www.flipcode.com/archives/The_Half-Edge_Data_Structure.shtml
+	
 }
 
 void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
