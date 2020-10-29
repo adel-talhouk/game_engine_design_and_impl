@@ -15,7 +15,7 @@ class SubdivisionNode : public MeshInstance2D
 	GDCLASS(SubdivisionNode, MeshInstance2D);
 
 	//Data
-	int mNumOfSubdivisions = 0;
+	int mNumOfSubdivisions;
 	int mNumOfTriangles;
 	bool mbShouldRecalculate;
 	bool mbShouldRedraw;

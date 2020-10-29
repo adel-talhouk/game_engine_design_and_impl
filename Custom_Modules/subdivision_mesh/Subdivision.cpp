@@ -12,6 +12,7 @@ SubdivisionNode::SubdivisionNode()
 	set_process(true);
 
 	mNumOfSubdivisions = 0;
+	mNumOfTriangles = 0;
 	mbShouldRecalculate = false;
 	mbShouldRedraw = true;
 }
@@ -183,6 +184,19 @@ void SubdivisionNode::_draw()
 		if (mbShouldRedraw)
 		{
 			//Draw here
+			Ref<ArrayMesh> a = memnew(ArrayMesh);
+			Array arrays;
+			arrays.resize(ArrayMesh::ARRAY_MAX);
+
+			arrays[ArrayMesh::ARRAY_VERTEX] = mNewVertices;
+			arrays[ArrayMesh::ARRAY_COLOR] = mNewColours;
+
+			//optionally u can add texture coordinates and attach a texture from the editor to this arraymesh in the scene
+
+			a->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arrays);
+
+			if (this != NULL)
+				this->set_mesh(a);
 
 			//Do not redraw
 			mbShouldRedraw = false;
