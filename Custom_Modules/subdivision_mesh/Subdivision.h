@@ -9,6 +9,31 @@
 #include "core/os/keyboard.h"
 #include "core/os/input.h"
 
+#include <sstream>
+#include <vector>
+
+//https://www.flipcode.com/archives/The_Half-Edge_Data_Structure.shtml
+struct Vertex
+{
+	Vector3 mPosition = Vector3(0, 0, 0);	//Position
+	HalfEdge* mpHalfEdge;					//Half-edge it points to
+};
+
+//https://www.flipcode.com/archives/The_Half-Edge_Data_Structure.shtml
+struct HalfEdge
+{
+	Vertex* mpVertex;						//Vertex
+	HalfEdge* mpHalfEdgePair;				//Pair half-edge
+	Face* mpFace;							//Face
+	HalfEdge* mpHalfEdgeNext;				//Next half-edge
+};
+
+//https://www.flipcode.com/archives/The_Half-Edge_Data_Structure.shtml
+struct Face
+{
+	HalfEdge* mpHalfEdge;					//One of the half-edges
+};
+
 class SubdivisionNode : public MeshInstance2D
 {
 	//The GoDot class
@@ -29,6 +54,7 @@ class SubdivisionNode : public MeshInstance2D
 	PoolColorArray mNewColours;
 
 	//Methods
+	void readInObjFile(std::ifstream& objFileName);
 	void convertToHalfEdgeMesh();
 	void subdivideMesh(int numOfSubdivisions);
 	void revertMesh();
