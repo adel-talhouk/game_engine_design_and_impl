@@ -68,7 +68,7 @@ void SubdivisionNode::_ready()
 		//mNewColours.append(Color(0, 0, 0));
 		//mNewColours.append(Color(0, 1, 0));
 
-		readInObjFile(...);
+		//readInObjFile(...);
 	}
 }
 
@@ -157,7 +157,7 @@ void SubdivisionNode::_update()
 		if (mbShouldRecalculate)
 		{
 			//Convert to a half-edge mesh
-			convertToHalfEdgeMesh();
+			//convertToHalfEdgeMesh();
 
 			//Subdivide it mNumOfsubdivisions times
 			subdivideMesh(mNumOfSubdivisions);
@@ -233,15 +233,15 @@ void SubdivisionNode::_notification(int p_what)
 //https://github.com/haldean/meshparse
 //https://github.com/haldean/meshparse/blob/master/src/objparse.h
 //https://github.com/haldean/meshparse/blob/master/src/objparse.cpp
-void SubdivisionNode::readInObjFile(std::ifstream& objFileName)
-{
-
-}
-
-void SubdivisionNode::convertToHalfEdgeMesh()
-{
-	
-}
+//void SubdivisionNode::readInObjFile(std::ifstream& objFileName)
+//{
+//
+//}
+//
+//void SubdivisionNode::convertToHalfEdgeMesh()
+//{
+//	
+//}
 
 void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 {
