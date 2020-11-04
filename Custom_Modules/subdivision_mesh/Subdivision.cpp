@@ -2,9 +2,7 @@
 #include <core/engine.h>
 
 #include <iostream>
-#include <ctime>
-
-//----------------------------------------------------------------------- GoDot class
+#include <fstream>
 
 SubdivisionNode::SubdivisionNode()
 {
@@ -15,6 +13,12 @@ SubdivisionNode::SubdivisionNode()
 	mNumOfTriangles = 0;
 	mbShouldRecalculate = false;
 	mbShouldRedraw = true;
+
+	//Create the original half-edge mesh
+	he_mesh = new meshparse::mesh();
+	std::ifstream infile;
+	infile.open("roosterTri.obj");
+	meshparse::load_obj(infile, *he_mesh);
 }
 
 SubdivisionNode::~SubdivisionNode()
@@ -25,7 +29,7 @@ SubdivisionNode::~SubdivisionNode()
 
 void SubdivisionNode::_bind_methods()
 {
-	//ClassDB::bind_method(D_METHOD("setObjFile", "objFileName"), &SubdivisionNode::setObjFile);
+	
 }
 
 void SubdivisionNode::_ready()
@@ -33,42 +37,29 @@ void SubdivisionNode::_ready()
 	//Do not let it run in the editor
 	if (!Engine::get_singleton()->is_editor_hint())
 	{
-		////We have 2 triangles
-		//mNumOfTriangles = 2;
+		//There are as many triangles as the half-edge mesh has faces
+		mNumOfTriangles = he_mesh->faces.size();
 
-		////Original vertices
-		//mOriginalVertices.push_back(Vector2(0, 100));
-		//mOriginalVertices.push_back(Vector2(100, 0));
-		//mOriginalVertices.push_back(Vector2(0, 0));
-		//mOriginalVertices.push_back(Vector2(0, 100));
-		//mOriginalVertices.push_back(Vector2(100, 100));
-		//mOriginalVertices.push_back(Vector2(100, 0));
+		//Set the original vertices and colours
+		for (std::vector<face*>::iterator it = he_mesh->faces.begin(); it != he_mesh->faces.end(); ++it)
+		{
+			Vector3 v0, v1, v2;
+			v0 = (*it)->e->vert->loc;
+			mOriginalVertices.push_back(Vector2(v0.x, v0.y));
+			v1 = (*it)->e->next->vert->loc;
+			mOriginalVertices.push_back(Vector2(v1.x, v1.y));
+			v2 = (*it)->e->next->next->vert->loc;
+			mOriginalVertices.push_back(Vector2(v2.x, v2.y));
 
-		////Original colours
-		//mOriginalColours.append(Color(1, 1, 1));
-		//mOriginalColours.append(Color(0, 1, 0));
-		//mOriginalColours.append(Color(0, 0, 1));
-		//mOriginalColours.append(Color(1, 0, 0));
-		//mOriginalColours.append(Color(0, 0, 0));
-		//mOriginalColours.append(Color(0, 1, 0));
+			mOriginalColours.append(Color(1, 1, 1));
+			mOriginalColours.append(Color(0, 1, 0));
+			mOriginalColours.append(Color(0, 0, 1));
 
-		////New vertices (the same as the original by default)
-		//mNewVertices.push_back(Vector2(0, 100));
-		//mNewVertices.push_back(Vector2(100, 0));
-		//mNewVertices.push_back(Vector2(0, 0));
-		//mNewVertices.push_back(Vector2(0, 100));
-		//mNewVertices.push_back(Vector2(100, 100));
-		//mNewVertices.push_back(Vector2(100, 0));
+		}
 
-		////New colours (the same as the original by default)
-		//mNewColours.append(Color(1, 1, 1));
-		//mNewColours.append(Color(0, 1, 0));
-		//mNewColours.append(Color(0, 0, 1));
-		//mNewColours.append(Color(1, 0, 0));
-		//mNewColours.append(Color(0, 0, 0));
-		//mNewColours.append(Color(0, 1, 0));
-
-		//readInObjFile(...);
+		//Copy the original values to the newVertices and newColours
+		mNewVertices = mOriginalVertices;
+		mNewColours = mOriginalColours;
 	}
 }
 
@@ -156,17 +147,11 @@ void SubdivisionNode::_update()
 		//If it should recalculate
 		if (mbShouldRecalculate)
 		{
-			//Convert to a half-edge mesh
-			//convertToHalfEdgeMesh();
-
-			//Subdivide it mNumOfsubdivisions times
+			//Subdivide the new half-edge mesh mNumOfsubdivisions times
 			subdivideMesh(mNumOfSubdivisions);
 
 			//Convert it back to a normal mesh
 			revertMesh();
-
-			//Update the mNewVertices and mNewColours
-
 
 			//Redraw it
 			mbShouldRedraw = true;
@@ -230,18 +215,11 @@ void SubdivisionNode::_notification(int p_what)
 	}
 }
 
-//https://github.com/haldean/meshparse
-//https://github.com/haldean/meshparse/blob/master/src/objparse.h
-//https://github.com/haldean/meshparse/blob/master/src/objparse.cpp
-//void SubdivisionNode::readInObjFile(std::ifstream& objFileName)
-//{
-//
-//}
-//
-//void SubdivisionNode::convertToHalfEdgeMesh()
-//{
-//	
-//}
+
+void SubdivisionNode::convertToHalfEdgeMesh()
+{
+	
+}
 
 void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 {
