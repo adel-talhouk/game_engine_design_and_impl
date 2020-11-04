@@ -215,12 +215,6 @@ void SubdivisionNode::_notification(int p_what)
 	}
 }
 
-
-void SubdivisionNode::convertToHalfEdgeMesh()
-{
-	
-}
-
 void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 {
 	/*
