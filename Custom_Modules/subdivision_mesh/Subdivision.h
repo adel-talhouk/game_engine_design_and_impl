@@ -4,6 +4,7 @@
 
 #include "scene/2d/node_2d.h"
 #include "scene/2d/mesh_instance_2d.h"
+//#include "scene/3d/mesh_instance.h"
 #include "scene/resources/mesh.h"
 #include "core/math/triangle_mesh.h"
 #include "core/os/keyboard.h"

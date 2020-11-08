@@ -43,17 +43,20 @@ void SubdivisionNode::_ready()
 		//Set the original vertices and colours
 		for (std::vector<face*>::iterator it = he_mesh->faces.begin(); it != he_mesh->faces.end(); ++it)
 		{
-			Vector3 v0, v1, v2;
+			Vector3 v0, v1, v2, v3;
 			v0 = (*it)->e->vert->loc;
 			mOriginalVertices.push_back(Vector2(v0.x, v0.y));
 			v1 = (*it)->e->next->vert->loc;
 			mOriginalVertices.push_back(Vector2(v1.x, v1.y));
 			v2 = (*it)->e->next->next->vert->loc;
 			mOriginalVertices.push_back(Vector2(v2.x, v2.y));
+			v3 = (*it)->e->next->next->next->vert->loc;
+			mOriginalVertices.push_back(Vector2(v3.x, v3.y));
 
 			mOriginalColours.append(Color(1, 1, 1));
 			mOriginalColours.append(Color(0, 1, 0));
 			mOriginalColours.append(Color(0, 0, 1));
+			mOriginalColours.append(Color(1, 0, 0));
 
 		}
 
@@ -215,12 +218,41 @@ void SubdivisionNode::_notification(int p_what)
 	}
 }
 
+//http://www.rorydriscoll.com/2008/08/01/catmull-clark-subdivision-the-basics/
 void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 {
-	/*
-		LOOP SCHEME FOR TRIANGLE SUBDIVISION, NOT CATMULL-CLARK, AS THE LATTER MAKES QUADS, AND WE WOULD HAVE TO CONVERT AT THE END. 
-		THE FORMER WORKS WITH TRIANGLES.
-	*/
+	//The 4 vertices in each face
+	vertex* vert0;
+	vertex* vert1;
+	vertex* vert2;
+	vertex* vert3;
+
+	//Iterate through all the faces
+	for (std::vector<face*>::iterator it = he_mesh->faces.begin(); it != he_mesh->faces.end(); ++it)
+	{
+		vert0 = (*it)->e->vert;
+		vert1 = (*it)->e->next->vert;
+		vert2 = (*it)->e->next->next->vert;
+		vert3 = (*it)->e->next->next->next->vert;
+
+		//If any edge is a boundary-edge, skip it
+		if (vert0->onboundary() || vert1->onboundary() || vert2->onboundary() || vert3->onboundary())
+			continue;
+
+		//1. Calculate face-point
+		Vector3 facePointPos;
+		facePointPos = (vert0->loc + vert1->loc + vert2->loc + vert3->loc) / 4;
+
+		//2. Calculate edge-point
+		Vector3 edgePoint;
+		edgePoint = 
+
+		//3. Move the control-point to the new position (vertex-point)
+
+
+		//4. Connect the new points
+
+	}
 }
 
 void SubdivisionNode::revertMesh()
