@@ -227,6 +227,12 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 	vertex* vert2;
 	vertex* vert3;
 
+	//The 4 vertices in the face touching the pair-edge
+	vertex* pairVert0;
+	vertex* pairVert1;
+	vertex* pairVert2;
+	vertex* pairVert3;
+
 	//Iterate through all the faces
 	for (std::vector<face*>::iterator it = he_mesh->faces.begin(); it != he_mesh->faces.end(); ++it)
 	{
@@ -234,6 +240,11 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 		vert1 = (*it)->e->next->vert;
 		vert2 = (*it)->e->next->next->vert;
 		vert3 = (*it)->e->next->next->next->vert;
+
+		pairVert0 = (*it)->e->pair->vert;
+		pairVert1 = (*it)->e->pair->next->vert;
+		pairVert2 = (*it)->e->pair->next->next->vert;
+		pairVert3 = (*it)->e->pair->next->next->next->vert;
 
 		//If any edge is a boundary-edge, skip it
 		if (vert0->onboundary() || vert1->onboundary() || vert2->onboundary() || vert3->onboundary())
@@ -245,7 +256,10 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 
 		//2. Calculate edge-point
 		Vector3 edgePoint;
-		edgePoint = 
+		Vector3 controlPointsAveragePos = (vert0->loc + vert1->loc) / 2;
+		Vector3 pairFacePointPos = (pairVert0->loc + pairVert1->loc + pairVert2->loc + pairVert3->loc) / 4;
+		Vector3 touchingFacePointsAveragePos = (facePointPos + pairFacePointPos) / 2;
+		edgePoint = (controlPointsAveragePos + touchingFacePointsAveragePos) / 2;
 
 		//3. Move the control-point to the new position (vertex-point)
 
