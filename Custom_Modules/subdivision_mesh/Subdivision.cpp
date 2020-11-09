@@ -227,7 +227,7 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 	vertex* vert2;
 	vertex* vert3;
 
-	//The 4 vertices in the face touching the pair-edge
+	//The 4 vertices in the face touching the half-edge's pair
 	vertex* pairVert0;
 	vertex* pairVert1;
 	vertex* pairVert2;
@@ -236,11 +236,13 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 	//Iterate through all the faces
 	for (std::vector<face*>::iterator it = he_mesh->faces.begin(); it != he_mesh->faces.end(); ++it)
 	{
+		//The 4 vertices in this face 
 		vert0 = (*it)->e->vert;
 		vert1 = (*it)->e->next->vert;
 		vert2 = (*it)->e->next->next->vert;
 		vert3 = (*it)->e->next->next->next->vert;
 
+		//The 4 vertices in the face touching the half-edge's pair
 		pairVert0 = (*it)->e->pair->vert;
 		pairVert1 = (*it)->e->pair->next->vert;
 		pairVert2 = (*it)->e->pair->next->next->vert;
@@ -261,8 +263,12 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 		Vector3 touchingFacePointsAveragePos = (facePointPos + pairFacePointPos) / 2;
 		edgePoint = (controlPointsAveragePos + touchingFacePointsAveragePos) / 2;
 
-		//3. Move the control-point to the new position (vertex-point)
+		//2.1 Make the new half-edges in the face
 
+
+		//3. Move the control-point to the new position (vertex-point)
+		Vector3 newVertPoint0;
+		Vector3 newVertPoint1;
 
 		//4. Connect the new points
 
