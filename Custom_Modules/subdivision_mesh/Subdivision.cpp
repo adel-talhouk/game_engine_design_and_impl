@@ -227,11 +227,8 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 	vertex* vert2;
 	vertex* vert3;
 
-	//The 4 vertices in the face touching the half-edge's pair
-	vertex* pairVert0;
-	vertex* pairVert1;
-	vertex* pairVert2;
-	vertex* pairVert3;
+	//The 4 adjacent faces
+	face* adjacentFaces[4];
 
 	//Iterate through all the faces
 	for (std::vector<face*>::iterator it = he_mesh->faces.begin(); it != he_mesh->faces.end(); ++it)
@@ -242,33 +239,43 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 		vert2 = (*it)->e->next->next->vert;
 		vert3 = (*it)->e->next->next->next->vert;
 
-		//The 4 vertices in the face touching the half-edge's pair
-		pairVert0 = (*it)->e->pair->vert;
-		pairVert1 = (*it)->e->pair->next->vert;
-		pairVert2 = (*it)->e->pair->next->next->vert;
-		pairVert3 = (*it)->e->pair->next->next->next->vert;
+		//The adjacent faces
+		adjacentFaces[0] = (*it)->e->pair->f;
+		adjacentFaces[1] = (*it)->e->next->pair->f;
+		adjacentFaces[2] = (*it)->e->next->next->pair->f;
+		adjacentFaces[3] = (*it)->e->next->next->next->pair->f;
 
 		//If any edge is a boundary-edge, skip it
 		if (vert0->onboundary() || vert1->onboundary() || vert2->onboundary() || vert3->onboundary())
 			continue;
 
-		//1. Calculate face-point
-		Vector3 facePointPos;
-		facePointPos = (vert0->loc + vert1->loc + vert2->loc + vert3->loc) / 4;
+		//1. Calculate the face-point
+		Vector3 currentFacePointPos;
+		currentFacePointPos = (vert0->loc + vert1->loc + vert2->loc + vert3->loc) / 4;
 
-		//2. Calculate edge-point
-		Vector3 edgePoint;
-		Vector3 controlPointsAveragePos = (vert0->loc + vert1->loc) / 2;
-		Vector3 pairFacePointPos = (pairVert0->loc + pairVert1->loc + pairVert2->loc + pairVert3->loc) / 4;
-		Vector3 touchingFacePointsAveragePos = (facePointPos + pairFacePointPos) / 2;
-		edgePoint = (controlPointsAveragePos + touchingFacePointsAveragePos) / 2;
+		//Adjacent face points
+		Vector3 adjacentFacePointPos0, adjacentFacePointPos1, adjacentFacePointPos2, adjacentFacePointPos3;
+		adjacentFacePointPos0 = (adjacentFaces[0]->e->vert->loc + adjacentFaces[0]->e->next->vert->loc +
+			adjacentFaces[0]->e->next->next->vert->loc + adjacentFaces[0]->e->next->next->next->vert->loc) / 4;
+		adjacentFacePointPos1 = (adjacentFaces[1]->e->vert->loc + adjacentFaces[1]->e->next->vert->loc +
+			adjacentFaces[1]->e->next->next->vert->loc + adjacentFaces[1]->e->next->next->next->vert->loc) / 4;
+		adjacentFacePointPos2 = (adjacentFaces[2]->e->vert->loc + adjacentFaces[2]->e->next->vert->loc +
+			adjacentFaces[2]->e->next->next->vert->loc + adjacentFaces[2]->e->next->next->next->vert->loc) / 4;
+		adjacentFacePointPos3 = (adjacentFaces[3]->e->vert->loc + adjacentFaces[3]->e->next->vert->loc +
+			adjacentFaces[3]->e->next->next->vert->loc + adjacentFaces[3]->e->next->next->next->vert->loc) / 4;
+
+		//2. Calculate the edge-points
+		Vector3 edgePointPos0, edgePointPos1, edgePointPos2, edgePointPos3;
+		edgePointPos0 = ((vert0->loc + vert1->loc) / 2) + ((currentFacePointPos + adjacentFacePointPos0) / 2);
+		edgePointPos1 = ((vert1->loc + vert2->loc) / 2) + ((currentFacePointPos + adjacentFacePointPos1) / 2);
+		edgePointPos2 = ((vert2->loc + vert3->loc) / 2) + ((currentFacePointPos + adjacentFacePointPos2) / 2);
+		edgePointPos3 = ((vert3->loc + vert0->loc) / 2) + ((currentFacePointPos + adjacentFacePointPos3) / 2);
 
 		//2.1 Make the new half-edges in the face
 
 
 		//3. Move the control-point to the new position (vertex-point)
-		Vector3 newVertPoint0;
-		Vector3 newVertPoint1;
+
 
 		//4. Connect the new points
 
