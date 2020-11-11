@@ -239,21 +239,21 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 		vert2 = (*it)->e->next->next->vert;
 		vert3 = (*it)->e->next->next->next->vert;
 
+		//If any edge is a boundary-edge, skip it
+		if (vert0->onboundary() || vert1->onboundary() || vert2->onboundary() || vert3->onboundary())
+			continue;
+
 		//The adjacent faces
 		adjacentFaces[0] = (*it)->e->pair->f;
 		adjacentFaces[1] = (*it)->e->next->pair->f;
 		adjacentFaces[2] = (*it)->e->next->next->pair->f;
 		adjacentFaces[3] = (*it)->e->next->next->next->pair->f;
 
-		//If any edge is a boundary-edge, skip it
-		if (vert0->onboundary() || vert1->onboundary() || vert2->onboundary() || vert3->onboundary())
-			continue;
-
 		//1. Calculate the face-point
 		Vector3 currentFacePointPos;
 		currentFacePointPos = (vert0->loc + vert1->loc + vert2->loc + vert3->loc) / 4;
 
-		//Adjacent face points
+		//Adjacent face points				(inefficient, need to store it somehow in its face so it is not always recalculated)
 		Vector3 adjacentFacePointPos0, adjacentFacePointPos1, adjacentFacePointPos2, adjacentFacePointPos3;
 		adjacentFacePointPos0 = (adjacentFaces[0]->e->vert->loc + adjacentFaces[0]->e->next->vert->loc +
 			adjacentFaces[0]->e->next->next->vert->loc + adjacentFaces[0]->e->next->next->next->vert->loc) / 4;
