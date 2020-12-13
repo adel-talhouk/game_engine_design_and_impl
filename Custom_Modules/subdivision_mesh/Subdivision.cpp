@@ -272,16 +272,6 @@ void SubdivisionNode::subdivideMesh(int numOfSubdivisions)
 		edgePointPos3 = ((vert3->loc + vert0->loc) / 2) + ((currentFacePointPos + adjacentFacePointPos3) / 2);
 
 		//2.1 Make the new half-edges in the face
-		edge* newHalfEdge0;
-		edge* collapsedHalfEdge0;
-		edge* newHalfEdge1;
-		edge* collapsedHalfEdge1;
-		edge* newHalfEdge2;
-		edge* collapsedHalfEdge2;
-		edge* newHalfEdge3;
-		edge* collapsedHalfEdge3;
-
-		//2.2 Add the new vertices and edges to the he_mesh
 
 
 		//3. Move the control-point to the new position (vertex-point)
